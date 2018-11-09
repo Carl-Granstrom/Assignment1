@@ -21,10 +21,9 @@ import java.util.Scanner;
 
 public class Fakultet {
 
+    //Har skippat konstruktorn då metoderna är statiska, kanske är en dålig idé...
     static private Scanner sc = new Scanner(System.in);  //skapar en Scanner för att kunna läsa input
     static private long n = inputTal();  //använder long eftersom fakultet snabbt blir väldigt stor
-
-    Fakultet(){}
 
     public static long getN() {
         return n;
