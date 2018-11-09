@@ -39,14 +39,8 @@ import java.util.Scanner;
 
 public class Kassa {
 
-    /**
-     * int-array som ska hålla valörerna, möjliggör att räkna
-     *  med olika valörkombinationer.
-     */
-    private int[] valorer;
-
-    //objektunikt värde med antalet valörer
-    private int antalVal;
+    private int[] valorer;    //int-array som ska hålla valörerna för att skapa kassor med olika valörkombinationer
+    private int antalVal;     //objektunikt värde med antalet valörer
 
     //Skapa en lista att lagra betalningarna i
     private List<Betalning> betList = new ArrayList<Betalning>();
@@ -57,14 +51,14 @@ public class Kassa {
     /**
      * Konstruktorn tar en int-array med valörer som indata
      */
-    Kassa(int[] array){
+    Kassa(int[] array){ //konstruktor som tar in en array och sorterar den för att sedan lagra den i kassaobjektet
         // sortera valörerna i stigande ordning
         valorer = array;
         Arrays.sort(valorer);
         this.antalVal = array.length;
     }
 
-    public void regBetal(int betalning, int kostnad){
+    public void regBetal(int betalning, int kostnad){  //Skapa en ny betalning och lagra i kassan
         Betalning b = new Betalning();
         b.setBetalat(betalning);
         b.setKostnad(kostnad);
@@ -142,9 +136,8 @@ public class Kassa {
 
             int summa = beraknaVaxelSumma();
 
-            //pga sortering hamnar största värdet sist i arrayen
+            ////Beräkna antal av varje valör som ska betalas tillbaka som växel lagra i array[lo->hi]
             for (int i = antalVal; i > 0; i--){
-                //summan som ska betalas tillbaka som växel
                 this.vaxelAntal[i - 1] = summa / valorer[i - 1];
                 summa = summa % valorer[i - 1];
             }
@@ -197,8 +190,8 @@ public class Kassa {
     }
 
     public static void main(String[] args) {
-        //Test med osorterad array
-        int[] a = {20, 1000, 1, 500, 50, 2, 200, 100};
+
+        int[] a = {20, 1000, 1, 500, 50, 2, 200, 100}; //Test med osorterad array
         //Skapa ny Kassa med valöruppsättningen från array a
         Kassa k1 = new Kassa(a);
         //Efterfråga summa för kostnaden
