@@ -46,36 +46,37 @@ public class Kassa {
     private List<Betalning> betList = new ArrayList<Betalning>();
 
     //Skapa ny Scanner som läser data från standard-input
-    Scanner input = new Scanner(System.in);
+    private Scanner input = new Scanner(System.in);
 
     /**
      * Konstruktorn tar en int-array med valörer som indata
      */
     Kassa(int[] array){ //konstruktor som tar in en array och sorterar den för att sedan lagra den i kassaobjektet
         // sortera valörerna i stigande ordning
-        valorer = array;
-        Arrays.sort(valorer);
-        this.antalVal = array.length;
+        valorer = array;                //lagra input-array i kassa-objektet
+        Arrays.sort(valorer);           //sortera arrayen från lo->hi
+        this.antalVal = array.length;   //räkna ut antalet valörer i den nya kassan och lagra detta(för indexering)
     }
 
     public void regBetal(int betalning, int kostnad){  //Skapa en ny betalning och lagra i kassan
-        Betalning b = new Betalning();
-        b.setBetalat(betalning);
-        b.setKostnad(kostnad);
-        b.beraknaVaxel();
-        betList.add(b);
+        Betalning b = new Betalning();  //skapa den nya betalningen
+        b.setBetalat(betalning);        //lagra inbetalad summa i betalningen
+        b.setKostnad(kostnad);          //lagra kostnaden för köpet i betalningen
+        b.beraknaVaxel();               //skapa och lagra valör-array
+        betList.add(b);                 //lagra betalnings-objektet i kassans Betalning-lista
     }
 
     //Efterfråga information om betalningen
     private int betalInput(){
         System.out.println("Vilken summa har erhållits som betalning?");
         int betalning = input.nextInt();
-        if (betalning > 0){
+
+        if (betalning > 0){     //tänker mig att det kanske finns en bättre lösning på det här
             return betalning;
         } else {
             System.out.println("Betalningen måste överstiga 0, vänligen försök igen!");
         }
-        return this.betalInput();
+        return this.betalInput();  //oklart om det här är så smart...
     }
 
     //Efterfråga information om kostnaden för köpet
@@ -107,26 +108,26 @@ public class Kassa {
             vaxelAntal = new int[antalVal];
         }
 
-        public void setBetalat(int bet){
-            if (bet == 0){
+        public void setBetalat(int betalat){
+            if (betalat == 0){
                 throw new IllegalArgumentException("Man måste betala mer än kostnaden för att få växel!");
-            } else if (bet < 0) {
+            } else if (betalat < 0) {
                 throw new IllegalArgumentException("Vi hanterar inte i-o-u:s här");
             } else {
-                this.betalat = bet;
+                this.betalat = betalat;
             }
         }
 
         private int getBetalat(){
-            return betalat;
+            return this.betalat;
         }
 
-        public void setKostnad(int kostn){
-            this.kostnad = kostn;
+        public void setKostnad(int kostnad){
+            this.kostnad = kostnad;
         }
 
         private int getKostnad(){
-            return kostnad;
+            return this.kostnad;
         }
 
         /**
@@ -137,9 +138,9 @@ public class Kassa {
             int summa = beraknaVaxelSumma();
 
             ////Beräkna antal av varje valör som ska betalas tillbaka som växel lagra i array[lo->hi]
-            for (int i = antalVal; i > 0; i--){
-                this.vaxelAntal[i - 1] = summa / valorer[i - 1];
-                summa = summa % valorer[i - 1];
+            for (int i = antalVal; i > 0; i--){  //iterera igenom valörarrayen bakifrån då största valören står sist
+                this.vaxelAntal[i - 1] = summa / valorer[i - 1]; //räkna ut hur många av valören som ska lagras
+                summa = summa % valorer[i - 1]; //räkna ut resten(remainder) och sätt summan till den
             }
 
             /**
@@ -157,10 +158,10 @@ public class Kassa {
 
             //ge felmeddelande om hela kostnaden ej är betalad
             if (this.getBetalat() < this.getKostnad()) {
-                throw new IllegalArgumentException("Hela beloppet ej betalat!");
+                throw new IllegalArgumentException("Hela beloppet ej betalat!"); //Test av exceptions
             }
 
-            return this.getBetalat() - this.getKostnad();
+            return (this.getBetalat() - this.getKostnad());  //beräkna och returnera återbetalningssumman
         }
 
         //Skriv ut lämplig data från Betalnings-objektet
