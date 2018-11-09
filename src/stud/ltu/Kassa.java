@@ -10,7 +10,6 @@
  *
  *  Datum: 2018-11-07
  *
- *
  *  Saker att utforska 1: inte tillåta dubblerade valörer i Kassa, använd en collection
  *  som kan kolla efter dubletter snabbt. Annars kan vi modifiera den sorterade arrayen
  *  genom att iterera genom hela arrayen och kolla om värdet är == det föregående värdet.
