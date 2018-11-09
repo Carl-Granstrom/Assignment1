@@ -7,7 +7,7 @@
  *  Föbättring: BigInteger skulle kunna användas för att hantera ännu större tal.
  *
  *  Programmet skrevs som en del i Systemvetenskapsutbildningen på Luleå Tekniska Högskola(LTU)
- *  inom kursen D0019N - Programutveckling med Java. Uppgift 1.1.
+ *  inom kursen D0019N - Programutveckling med Java. Uppgift 1.2.
  *
  *  Författare: Carl Granström
  *
