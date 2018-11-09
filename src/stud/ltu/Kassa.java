@@ -16,6 +16,7 @@
  *  genom att iterera genom hela arrayen och kolla om värdet är == det föregående värdet.
  *
  *  Alternativt använda array.contains() i en loop. Ska fundera vad som är snabbast.
+ *
  *  Å andra sidan skapar inte dubblerade valörer något vidare problem då dessa helt enkelt
  *  kommer hoppas över i beräkningarna då delningen av den kvarvarande summan gör att
  *  delningen över den dubblerade valören ger 0, och då hoppas valören också över i utskriften.
