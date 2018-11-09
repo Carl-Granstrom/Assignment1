@@ -31,12 +31,12 @@ public class Fakultet {
 
     private static long inputTal() {
         System.out.println("Vänligen skriv in ett naturligt tal för beräkning av fakultet: ");
-        n = sc.nextInt(); //läs in int från användaren
+        n = sc.nextByte(); //läs in byte från användaren
         while (!accTal(n)) {
             System.out.println("Inte negativt, men inte heller över 20, vänligen skriv ett nytt tal");
-            n = sc.nextInt();
+            n = sc.nextByte();
         }
-        return n;  //implicit konvertering från int till long
+        return n;  //implicit konvertering från byte till long via promotion
     }
 
     private static long beraknaFakultet(long n) {
@@ -54,10 +54,11 @@ public class Fakultet {
     }
 
     private static boolean accTal(long n) {
-        return (n >= 0 && n < 21);
+        return (n >= 0 && n < 21); //kontrollera att det är input som programmet kan hantera
     }
 
     public static void main(String[] args){
+        //Skriv ut resultat
         System.out.println("Fakulteten för " + Fakultet.getN() + " är: " + Fakultet.beraknaFakultet(n));
     }
 }
