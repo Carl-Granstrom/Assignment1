@@ -54,7 +54,7 @@ public class Fakultet {
     }
 
     private static boolean accTal(long n) {
-        return (n >= 0 && n < 21); //kontrollera att det är input som programmet kan hantera
+        return (n >= 0 && n <= 20); //kontrollera att det är input som programmet kan hantera
     }
 
     public static void main(String[] args){
