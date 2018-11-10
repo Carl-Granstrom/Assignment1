@@ -43,7 +43,10 @@ public class WakeUp {
         }
     }
 
-    //Autentisering
+    /**Autentisering
+     * Förslag på förbättringar:
+     * 1. Lös med klasser och objekt istället för bara via metod.
+     */
     private static boolean authenticate(){
         return false;
     }
@@ -53,9 +56,11 @@ public class WakeUp {
         return 0;
     }
 
-    /**Aktivitetsbokning, bygg om till grafisk lösning?
+    /**Aktivitetsbokning
      * Förslag på förbättringar:
      * 1. Bokningsbara platser måste visas innan valet, ej bokningsbara ska inte erbjudas. Det är frustrerande.
+     * 2. Representera platserna med ngn typ av skärmutskrift för att visualisera salsplatserna
+     * 3. Bygg grafisk lösning
      */
     private static void bokaAktivitet(){
 
@@ -66,6 +71,7 @@ public class WakeUp {
         System.exit(0);
     }
 
+    //Använd medlem-klassen för att skapa medlem-objekt. Kanske göra en MedlemsRegister-klass också?
     private static void registreraMedlem(){}
 
     //main method

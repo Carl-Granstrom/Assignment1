@@ -45,7 +45,7 @@ public class Kassa {
     //Skapa en lista att lagra betalningarna i
     private List<Betalning> betList = new ArrayList<Betalning>();
 
-    //Skapa ny Scanner som läser data från standard-input
+    //Skapa ny Scanner som läser data från standard-input, oklart om det är en bra idé att deklararera den i klassen
     private Scanner input = new Scanner(System.in);
 
     /**
