@@ -9,7 +9,7 @@
  *  Datum: 2018-11-10
  *
  *************************************************************************/
-package stud.ltu;
+package stud.ltu.WakeUpGym;
 
 import java.util.Scanner;
 

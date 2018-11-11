@@ -10,7 +10,7 @@
  *
  *************************************************************************/
 
-package stud.ltu;
+package stud.ltu.WakeUpGym;
 
 public class Medlem {
     Medlem(){

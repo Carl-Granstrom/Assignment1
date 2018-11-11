@@ -30,7 +30,7 @@
  *
  *************************************************************************/
 
-package stud.ltu;
+package stud.ltu.Assignment1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
