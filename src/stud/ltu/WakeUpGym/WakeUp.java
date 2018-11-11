@@ -14,7 +14,7 @@ package stud.ltu.WakeUpGym;
 import java.util.Scanner;
 
 public class WakeUp {
-
+    private static Medlem user;
     /**Visa meny. Bygg om lösningen helt?
      * Förslag på förbättringar:
      * 1.Använd en stack för att hantera fram/tillbaka i menyn
@@ -23,7 +23,7 @@ public class WakeUp {
     private static void visaMeny(){
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("\n1.Bli medlem\n2.Logga in\n3.Boka plats på aktivitet\n4.Avsluta");
+            System.out.println("\n1.Bli medlem\n2.Logga in\n3.Förläng medlemskap\n4.Boka plats på aktivitet\n5.Avsluta");
             byte menyVal = sc.nextByte();
             switch (menyVal) {
                 case 1:
@@ -33,9 +33,12 @@ public class WakeUp {
                     authenticate();
                     break;
                 case 3:
-                    bokaAktivitet();
+                    forlangMedlemskap();
                     break;
                 case 4:
+                    bokaAktivitet();
+                    break;
+                case 5:
                     avsluta();
                 default:
                     System.out.println("Vänligen välj genom att skriva in rätt siffra och bekräfta genom att trycka Enter");
@@ -47,8 +50,8 @@ public class WakeUp {
      * Förslag på förbättringar:
      * 1. Lös med klasser och objekt istället för bara via metod.
      */
-    private static boolean authenticate(){
-        return false;
+    private static int authenticate(){
+        return 0;
     }
 
     //Kostnadsberäkning
@@ -63,7 +66,13 @@ public class WakeUp {
      * 3. Bygg grafisk lösning
      */
     private static void bokaAktivitet(){
+        if (user.getStatus() != ACTIVE){    //Fattar inte enum riktigt, måste researcha mer.
 
+        }
+    }
+
+    private static void forlangMedlemskap(){
+        beraknaKostnad();
     }
 
     private static void avsluta(){
@@ -72,7 +81,9 @@ public class WakeUp {
     }
 
     //Använd medlem-klassen för att skapa medlem-objekt. Kanske göra en MedlemsRegister-klass också?
-    private static void registreraMedlem(){}
+    private static void registreraMedlem(){
+        beraknaKostnad();
+    }
 
     //main method
     public static void main(String args[]){

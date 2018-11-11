@@ -13,8 +13,15 @@
 package stud.ltu.WakeUpGym;
 
 public class Medlem {
+    private int personNummer;
+    private String namn;
+    private Status status;
+
     Medlem(){
-        int personNummer;
-        String namn;
+
+    }
+
+    public Status getStatus(){
+        return this.status;
     }
 }
