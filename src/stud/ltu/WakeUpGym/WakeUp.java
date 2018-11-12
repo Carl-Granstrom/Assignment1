@@ -20,6 +20,8 @@ public class WakeUp {
      * 1.Använd en stack för att hantera fram/tillbaka i menyn
      * 2.Gör om till grafiskt menysnitt, med JavaFX?
      */
+
+
     private static void visaMeny(){
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -66,7 +68,7 @@ public class WakeUp {
      * 3. Bygg grafisk lösning
      */
     private static void bokaAktivitet(){
-        if (user.getStatus() != ACTIVE){    //Fattar inte enum riktigt, måste researcha mer.
+        if (user.getStatus() != Status.ACTIVE){    //
 
         }
     }

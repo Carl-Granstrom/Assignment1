@@ -15,13 +15,19 @@ package stud.ltu.WakeUpGym;
 public class Medlem {
     private int personNummer;
     private String namn;
-    private Status status;
+
+    private Status medlStatus;
 
     Medlem(){
-
+        //initialisera medlemsstatus till inaktiv när ny medlem skapas
+        Status medlStatus = Status.INACTIVE;
     }
 
-    public Status getStatus(){
-        return this.status;
+    protected Status getStatus(){
+        return this.medlStatus;
+    }
+
+    protected void setStatus(Status medlStatus){
+        this.medlStatus = medlStatus;
     }
 }
