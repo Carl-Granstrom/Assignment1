@@ -25,7 +25,7 @@
  *
  *  Saker att utforska 3: Förbättra felhanteringen med exception catching
  *
- *  Saker att utforska 4: TIllåt negativa betalningar och/eller ångrande av betalningar i
+ *  Saker att utforska 4: Tillåt negativa betalningar och/eller ångrande av betalningar i
  *  systemet. Skapligt enkelt att implementera.
  *
  *************************************************************************/
