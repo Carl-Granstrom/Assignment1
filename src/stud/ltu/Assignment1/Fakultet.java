@@ -1,4 +1,5 @@
-/*************************************************************************
+package stud.ltu.Assignment1;
+/**
  *  Syfte: Programmet hanterar beräkningar av Fakultetsfunktionen. Programmet hanterar felaktig
  *  input från användaren i form av negativa tal, fakultetsfunktionen växer så snabbt att
  *  även long drabbas av overflow-problem. i praktiken hanterar inte programmet fakultet högre än 20
@@ -13,9 +14,7 @@
  *
  *  Datum: 2018-11-09
  *
- *************************************************************************/
-
-package stud.ltu.Assignment1;
+ */
 
 import java.util.Scanner;
 

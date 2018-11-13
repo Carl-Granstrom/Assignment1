@@ -1,3 +1,4 @@
+package stud.ltu.Assignment1;
 /*************************************************************************
  *  Syfte: Programmet hanterar beräkningar av vilken växel som ska ges tillbaka
  *  till en kund givet en viss köpesumma och en viss betald summa. Systemet tillåter
@@ -6,7 +7,7 @@
  *  Programmet skrevs som en del i Systemvetenskapsutbildningen på Luleå Tekniska Högskola(LTU)
  *  inom kursen D0019N - Programutveckling med Java. Uppgift 1.1.
  *
- *  Författare: Carl Granström
+ *  @author Carl Granström
  *
  *  Datum: 2018-11-07
  *
@@ -30,7 +31,6 @@
  *
  *************************************************************************/
 
-package stud.ltu.Assignment1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,24 +41,19 @@ public class Kassa {
 
     private int[] valorer;    //int-array som ska hålla valörerna för att skapa kassor med olika valörkombinationer
     private int antalVal;     //objektunikt värde med antalet valörer
+    private List<Betalning> betList = new ArrayList<Betalning>(); //Skapa en lista att lagra betalningarna i
+    private Scanner input = new Scanner(System.in);       //Skapa ny Scanner som läser data från standard-input
 
-    //Skapa en lista att lagra betalningarna i
-    private List<Betalning> betList = new ArrayList<Betalning>();
-
-    //Skapa ny Scanner som läser data från standard-input, oklart om det är en bra idé att deklararera den i klassen
-    private Scanner input = new Scanner(System.in);
-
-    /**
-     * Konstruktorn tar en int-array med valörer som indata
-     */
-    Kassa(int[] array){ //konstruktor som tar in en array och sorterar den för att sedan lagra den i kassaobjektet
+    //konstruktor som tar in en array och sorterar den för att sedan lagra den i kassaobjektet
+    Kassa(int[] array){
         // sortera valörerna i stigande ordning
         valorer = array;                //lagra input-array i kassa-objektet
         Arrays.sort(valorer);           //sortera arrayen från lo->hi
         this.antalVal = array.length;   //räkna ut antalet valörer i den nya kassan och lagra detta(för indexering)
     }
 
-    public void regBetal(int betalning, int kostnad){  //Skapa en ny betalning och lagra i kassan
+    //Skapa en ny betalning och lagra i kassan
+    public void regBetal(int betalning, int kostnad){
         Betalning b = new Betalning();  //skapa den nya betalningen
         b.setBetalat(betalning);        //lagra inbetalad summa i betalningen
         b.setKostnad(kostnad);          //lagra kostnaden för köpet i betalningen
@@ -71,12 +66,12 @@ public class Kassa {
         System.out.println("Vilken summa har erhållits som betalning?");
         int betalning = input.nextInt();
 
-        if (betalning > 0){     //tänker mig att det kanske finns en bättre lösning på det här
-            return betalning;
-        } else {
+        //förhindra användaren från att ge felaktig input
+        while (betalning < 0){
             System.out.println("Betalningen måste överstiga 0, vänligen försök igen!");
+            betalning = input.nextInt();
         }
-        return this.betalInput();  //oklart om det här är så smart...
+        return betalning;
     }
 
     //Efterfråga information om kostnaden för köpet
@@ -84,13 +79,12 @@ public class Kassa {
         System.out.println("Totalkostnad för köpet?");
         int kostnad = input.nextInt();
 
-        if (kostnad > 0){
-            return kostnad;
-        } else {
-            System.out.println("Vi ger väl inte bort våra varor? Vänligen försök igen");
+        //förhindra användaren från att ge felaktig input
+        while (kostnad <= 0) {
+            System.out.println("Vi ger väl inte bort våra varor? Vänligen ange totalkostnad igen:");
+            kostnad = input.nextInt();
         }
-
-        return this.kostnadInput();
+        return kostnad;
     }
 
     /**
@@ -105,12 +99,15 @@ public class Kassa {
         private int kvarSumma;
 
         Betalning(){
+            betalat = 0;
+            kostnad = 0;
             vaxelAntal = new int[antalVal];
         }
 
+        //Detta är bara ett test av throw-funktionen, egentligen bättre att hantera felet istället för att avsluta
         public void setBetalat(int betalat){
             if (betalat == 0){
-                throw new IllegalArgumentException("Man måste betala mer än kostnaden för att få växel!");
+                throw new IllegalArgumentException("Man måste betala för att få växel!");
             } else if (betalat < 0) {
                 throw new IllegalArgumentException("Vi hanterar inte i-o-u:s här");
             } else {
