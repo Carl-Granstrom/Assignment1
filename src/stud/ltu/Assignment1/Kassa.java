@@ -32,17 +32,13 @@ package stud.ltu.Assignment1;
  *************************************************************************/
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Kassa {
 
     private int[] valorer;    //int-array som ska hålla valörerna för att skapa kassor med olika valörkombinationer
     private int antalVal;     //objektunikt värde med antalet valörer
     private List<Betalning> betList = new ArrayList<Betalning>(); //Skapa en lista att lagra betalningarna i
-    private Scanner input = new Scanner(System.in);       //Skapa ny Scanner som läser data från standard-input
 
     //konstruktor som tar in en array och sorterar den för att sedan lagra den i kassaobjektet
     Kassa(int[] array){
@@ -52,11 +48,13 @@ public class Kassa {
         this.antalVal = array.length;   //räkna ut antalet valörer i den nya kassan och lagra detta(för indexering)
     }
 
-    //Skapa en ny betalning och lagra i kassan
-    public void regBetal(int betalning, int kostnad){
+    /**
+     * Skapa en ny betalning och lagra i kassan
+     */
+    public void regBetal(){
         Betalning b = new Betalning();  //skapa den nya betalningen
-        b.setBetalat(betalning);        //lagra inbetalad summa i betalningen
-        b.setKostnad(kostnad);          //lagra kostnaden för köpet i betalningen
+        b.setBetalat(betalInput());     //lagra inbetalad summa i betalningen
+        b.setKostnad(kostnadInput());   //lagra kostnaden för köpet i betalningen
         b.beraknaVaxel();               //skapa och lagra valör-array
         betList.add(b);                 //lagra betalnings-objektet i kassans Betalning-lista
     }
@@ -64,27 +62,30 @@ public class Kassa {
     //Efterfråga information om betalningen
     private int betalInput(){
         System.out.println("Vilken summa har erhållits som betalning?");
-        int betalning = input.nextInt();
-
-        //förhindra användaren från att ge felaktig input
-        while (betalning < 0){
-            System.out.println("Betalningen måste överstiga 0, vänligen försök igen!");
-            betalning = input.nextInt();
-        }
+        int betalning = getLegalIntInput();
         return betalning;
     }
 
     //Efterfråga information om kostnaden för köpet
     private int kostnadInput(){
         System.out.println("Totalkostnad för köpet?");
-        int kostnad = input.nextInt();
-
-        //förhindra användaren från att ge felaktig input
-        while (kostnad <= 0) {
-            System.out.println("Vi ger väl inte bort våra varor? Vänligen ange totalkostnad igen:");
-            kostnad = input.nextInt();
-        }
+        int kostnad = getLegalIntInput();
         return kostnad;
+    }
+
+    private int getLegalIntInput() {
+        int sentinel = -1; //sentinel value
+        while (sentinel <= 0) {
+            try {
+                Scanner input = new Scanner(System.in); //Skapa ny Scanner som läser data från standard-input
+                sentinel = input.nextInt();
+            }
+            catch (InputMismatchException e) {
+                System.out.println(e);
+            }
+            System.out.println("Vänligen ange ett positivt heltal: ");
+        }
+        return sentinel;
     }
 
     /**
@@ -128,19 +129,16 @@ public class Kassa {
         }
 
         /**
-         * Metod för att beräkna antal av varje valör som ska återbetalas som växel.
+         * Metod f&ouml;r att ber&auml;kna antal av varje val&ouml;r som ska &aring;terbetalas som v&auml;xel.
          */
         private void beraknaVaxel(){
-
             int summa = beraknaVaxelSumma();
-
-            ////Beräkna antal av varje valör som ska betalas tillbaka som växel lagra i array[lo->hi]
+            //Beräkna antal av varje valör som ska betalas tillbaka som växel lagra i array[lo->hi]
             for (int i = antalVal; i > 0; i--){  //iterera igenom valörarrayen bakifrån då största valören står sist
                 this.vaxelAntal[i - 1] = summa / valorer[i - 1]; //räkna ut hur många av valören som ska lagras
                 summa = summa % valorer[i - 1]; //räkna ut resten(remainder) och sätt summan till den
             }
-
-            /**
+            /*
              * Om inga 1-valörer finns kan det vara växel som inte kan betalas ut,
              * vi lagrar detta i betalningens variabel kvarSumma
              */
@@ -152,12 +150,10 @@ public class Kassa {
          * Ger felmeddelande om inte hela summan betalats.
          */
         private int beraknaVaxelSumma(){
-
             //ge felmeddelande om hela kostnaden ej är betalad
             if (this.getBetalat() < this.getKostnad()) {
                 throw new IllegalArgumentException("Hela beloppet ej betalat!"); //Test av exceptions
             }
-
             return (this.getBetalat() - this.getKostnad());  //beräkna och returnera återbetalningssumman
         }
 
@@ -173,11 +169,8 @@ public class Kassa {
         //Skriv ut valörerna och antal av varje valör
         private void printVal(){
             int valNum = 0;
-
             System.out.println("Ge tillbaka växel:");
-
             for (int i : vaxelAntal){
-
                 //Visa endast de valörer som ska betalas ut
                 if (i > 0) {
                     System.out.println("Valör " + valorer[valNum] + " x " + i);
@@ -187,17 +180,17 @@ public class Kassa {
         }
     }
 
+    /**
+     * Entry point. Går att göra klassen ännu mer oberoende genom att hantera
+     * @param args
+     */
     public static void main(String[] args) {
 
         int[] a = {20, 1000, 1, 500, 50, 2, 200, 100}; //Test med osorterad array
         //Skapa ny Kassa med valöruppsättningen från array a
         Kassa k1 = new Kassa(a);
-        //Efterfråga summa för kostnaden
-        int kostnad = k1.kostnadInput();
-        //Efterfråga summa för betalningen
-        int betalning = k1.betalInput();
         //Registrera ny betalning på kassa k1
-        k1.regBetal(betalning, kostnad);
+        k1.regBetal();
         //Hämta betalningen ur Kassans lagrade betalningar, bör eventuellt skötas med en Stack istället, men orka.
         Betalning betal = k1.betList.get(0);
         //åberopa Betalning-objektets print-metod för att skriva ut all information
