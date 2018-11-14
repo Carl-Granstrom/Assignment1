@@ -83,7 +83,9 @@ public class Kassa {
             catch (InputMismatchException e) {
                 System.out.println(e);
             }
-            System.out.println("Vänligen ange ett positivt heltal: ");
+            if (sentinel <= 0) {
+                System.out.println("Vänligen ange ett positivt heltal: ");
+                }
         }
         return sentinel;
     }
@@ -133,10 +135,12 @@ public class Kassa {
          */
         private void beraknaVaxel(){
             int summa = beraknaVaxelSumma();
-            //Beräkna antal av varje valör som ska betalas tillbaka som växel lagra i array[lo->hi]
-            for (int i = antalVal; i > 0; i--){  //iterera igenom valörarrayen bakifrån då största valören står sist
-                this.vaxelAntal[i - 1] = summa / valorer[i - 1]; //räkna ut hur många av valören som ska lagras
-                summa = summa % valorer[i - 1]; //räkna ut resten(remainder) och sätt summan till den
+            if (summa >= 0) {
+                //Beräkna antal av varje valör som ska betalas tillbaka som växel lagra i array[lo->hi]
+                for (int i = antalVal; i > 0; i--) {  //iterera igenom valörarrayen bakifrån då största valören står sist
+                    this.vaxelAntal[i - 1] = summa / valorer[i - 1]; //räkna ut hur många av valören som ska lagras
+                    summa = summa % valorer[i - 1]; //räkna ut resten(remainder) och sätt summan till den
+                }
             }
             /*
              * Om inga 1-valörer finns kan det vara växel som inte kan betalas ut,
@@ -150,10 +154,6 @@ public class Kassa {
          * Ger felmeddelande om inte hela summan betalats.
          */
         private int beraknaVaxelSumma(){
-            //ge felmeddelande om hela kostnaden ej är betalad
-            if (this.getBetalat() < this.getKostnad()) {
-                throw new IllegalArgumentException("Hela beloppet ej betalat!"); //Test av exceptions
-            }
             return (this.getBetalat() - this.getKostnad());  //beräkna och returnera återbetalningssumman
         }
 
@@ -162,8 +162,12 @@ public class Kassa {
             System.out.println("Betalat: " + betalat);
             System.out.println("Kostnad: " + kostnad);
             System.out.println("Växel totalt: " + beraknaVaxelSumma());
-            printVal();
-            System.out.println("Växel som ej kan betalas ut: " + kvarSumma);
+            if (kvarSumma >= 0) {
+                printVal();
+                System.out.println("Växel som ej kan betalas ut: " + kvarSumma);
+            } else {
+                System.out.println("Betalningen är för liten, det återstår att betala: " + Math.abs(kvarSumma));
+            }
         }
 
         //Skriv ut valörerna och antal av varje valör
@@ -181,20 +185,25 @@ public class Kassa {
     }
 
     /**
-     * Entry point. Går att göra klassen ännu mer oberoende genom att hantera
-     * @param args
+     * Entry point. Observera att två olika kassor med olika valörer skapas och testas, vilket kan får programmet
+     * att upplevas lite rörigt. Med bara en kassa blir det snyggare. Ta gärna bort och testa.
      */
     public static void main(String[] args) {
 
         int[] a = {20, 1000, 1, 500, 50, 2, 200, 100}; //Test med osorterad array
-        //Skapa ny Kassa med valöruppsättningen från array a
+        int[] b = {25, 2300, 4, 500, 50, 200, 105}; //Test med osorterad array och konstiga valörer
+        //Skapa nya Kassor med valöruppsättningen från array a och b, här anropas Kassa
         Kassa k1 = new Kassa(a);
-        //Registrera ny betalning på kassa k1
+        Kassa k2 = new Kassa(b);
+        //Registrera ny betalning på kassa k1 och k2, det är här själva logiken för Betalning anropas
         k1.regBetal();
-        //Hämta betalningen ur Kassans lagrade betalningar, bör eventuellt skötas med en Stack istället, men orka.
+        k2.regBetal();
+        //Hämta betalningarna ur Kassornas respektive lagrade betalningar
         Betalning betal = k1.betList.get(0);
-        //åberopa Betalning-objektets print-metod för att skriva ut all information
+        Betalning betal2 = k2.betList.get(0);
+        //åberopa Betalning-objektens print-metod för att skriva ut all information
         betal.print();
+        betal2.print();
     }
 
 }
