@@ -186,7 +186,7 @@ public class Kassa {
 
     /**
      * Entry point. Observera att två olika kassor med olika valörer skapas och testas, vilket kan får programmet
-     * att upplevas lite rörigt. Med bara en kassa blir det snyggare. Ta gärna bort och testa.
+     * att upplevas lite rörigt. Med bara en kassa blir det snyggare. Ta gärna bort och testa med en kassa.
      */
     public static void main(String[] args) {
 
