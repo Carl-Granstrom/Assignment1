@@ -23,8 +23,8 @@ public class WakeUp {
 
 
     private static void visaMeny(){
-        Scanner sc = new Scanner(System.in);
         while (true) {
+            Scanner sc = new Scanner(System.in);
             System.out.println("\n1.Bli medlem\n2.Logga in\n3.Förläng medlemskap\n4.Boka plats på aktivitet\n5.Avsluta");
             byte menyVal = sc.nextByte();
             switch (menyVal) {
