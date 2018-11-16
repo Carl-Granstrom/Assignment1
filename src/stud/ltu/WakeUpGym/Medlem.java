@@ -12,7 +12,7 @@
 
 package stud.ltu.WakeUpGym;
 
-public class Medlem {
+public final class Medlem {
     private int personNummer;
     private String namn;
 
