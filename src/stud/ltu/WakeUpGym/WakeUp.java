@@ -13,7 +13,7 @@ package stud.ltu.WakeUpGym;
 
 import java.util.Scanner;
 
-public class WakeUp {
+public final class WakeUp {
     private static Medlem user;
     /**Visa meny. Bygg om lösningen helt?
      * Förslag på förbättringar:
