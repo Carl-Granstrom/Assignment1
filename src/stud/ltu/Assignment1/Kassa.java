@@ -11,24 +11,6 @@ package stud.ltu.Assignment1;
  *
  *  Datum: 2018-11-07
  *
- *  Saker att utforska 1: inte tillåta dubblerade valörer i Kassa, använd en collection
- *  som kan kolla efter dubletter snabbt. Annars kan vi modifiera den sorterade arrayen
- *  genom att iterera genom hela arrayen och kolla om värdet är == det föregående värdet.
- *
- *  Alternativt använda array.contains() i en loop. Ska fundera vad som är snabbast.
- *
- *  Å andra sidan skapar inte dubblerade valörer något vidare problem då dessa helt enkelt
- *  kommer hoppas över i beräkningarna då delningen av den kvarvarande summan gör att
- *  delningen över den dubblerade valören ger 0, och då hoppas valören också över i utskriften.
- *
- *  Saker att utforska 2: Använd en eller två stacks för att lagra betalningarna.
- *  Använd Stack.peek()? för att returnera den mest nyliga betalningen.
- *
- *  Saker att utforska 3: Förbättra felhanteringen med exception catching
- *
- *  Saker att utforska 4: Tillåt negativa betalningar och/eller ångrande av betalningar i
- *  systemet. Skapligt enkelt att implementera.
- *
  *************************************************************************/
 
 
@@ -162,10 +144,10 @@ public class Kassa {
             System.out.println("Betalat: " + betalat);
             System.out.println("Kostnad: " + kostnad);
             System.out.println("Växel totalt: " + beraknaVaxelSumma());
-            if (kvarSumma >= 0) {
-                printVal();
+            printVal();
+            if (kvarSumma > 0) {
                 System.out.println("Växel som ej kan betalas ut: " + kvarSumma);
-            } else {
+            } else if (kvarSumma < 0){
                 System.out.println("Betalningen är för liten, det återstår att betala: " + Math.abs(kvarSumma));
             }
         }
@@ -185,25 +167,26 @@ public class Kassa {
     }
 
     /**
-     * Entry point. Observera att två olika kassor med olika valörer skapas och testas, vilket kan får programmet
-     * att upplevas lite rörigt. Med bara en kassa blir det snyggare. Ta gärna bort och testa med en kassa.
+     * Entry point. Observera att två olika kassor med olika valörer skapas och testas.
      */
     public static void main(String[] args) {
 
         int[] a = {20, 1000, 1, 500, 50, 2, 200, 100}; //Test med osorterad array
-        int[] b = {25, 2300, 4, 500, 50, 200, 105}; //Test med osorterad array och konstiga valörer
         //Skapa nya Kassor med valöruppsättningen från array a och b, här anropas Kassa
         Kassa k1 = new Kassa(a);
-        Kassa k2 = new Kassa(b);
         //Registrera ny betalning på kassa k1 och k2, det är här själva logiken för Betalning anropas
         k1.regBetal();
-        k2.regBetal();
         //Hämta betalningarna ur Kassornas respektive lagrade betalningar
         Betalning betal = k1.betList.get(0);
-        Betalning betal2 = k2.betList.get(0);
-        //åberopa Betalning-objektens print-metod för att skriva ut all information
+        //åberopa Betalning-objektets print-metod för att skriva ut all information
         betal.print();
+
+        //Test med osorterad array och konstiga valörer
+        System.out.println("\nTesta betalning i kassa 2");
+        int[] b = {25, 2300, 4, 500, 50, 200, 105};
+        Kassa k2 = new Kassa(b);
+        k2.regBetal();
+        Betalning betal2 = k2.betList.get(0);
         betal2.print();
     }
-
 }
