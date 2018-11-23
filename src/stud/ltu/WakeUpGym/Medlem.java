@@ -19,7 +19,6 @@ import java.util.Scanner;
 public class Medlem {
     private int[] personNummer = new int[10];  //storing as array also permits leading zeroes
     private String namn;
-
     private Status medlStatus;
 
     Medlem(){
@@ -53,5 +52,11 @@ public class Medlem {
 
     public int[] getPersonNummer() {
         return this.personNummer;
+    }
+
+    //TODO Lägg till mer i toString? Typ pnr osv? Eller lägg detta i en print()-metod? Förmodligen bättre.
+    @Override
+    public String toString() {
+        return namn;
     }
 }
