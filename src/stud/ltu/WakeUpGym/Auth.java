@@ -3,29 +3,22 @@ package stud.ltu.WakeUpGym;
 import java.util.stream.IntStream;
 
 /**
- * TODO Några saker behöver kollas angående personnumret som slagits in, annars throw exception, och hantera detta
- * TODO längre upp i programmet: endast 0-9 i char array, char array 10 lång.
+ * Statisk klass för att samla autentiseringsmetoder i programmet.
+ * TODO Auth-metoder för medlemmar i systemet: betalande eller ej?
  */
 public class Auth {
 
-    //anropa från Medlemsregister innan medlem lagras
-
-    public Auth(Medlem medlem){
-
+    //går ej att instantiera
+    private Auth(){
     }
 
-    //precondition: char array c[] är 10 chars lång
-    private static boolean pnrIsLegal(char[] c) {
-        assert (c.length == 10);    //assert precondition is true
+    //precondition medlemmens int-array personNummer är 10 lång
+    public static boolean pnrIsLegal(Medlem medlem) {
+        int[] pnr = medlem.getPersonNummer();
+        assert (pnr.length == 10);    //assert precondition is true
 
-        int[] numbers = new int[10];
-        //convert char array to int array
-        for (int i = 0; i < 10; i++){
-            numbers[i] = Character.getNumericValue(c[i]); //return numeric val of char at index i, store in numbers[i]
-        }
-
-        //multiplicera med 2 och addera, IntStream-implementation, Deitel & Deitel (s. 762)
-        int sum = IntStream.of(numbers).map(x -> x * 2).sum();
+        //multiplicera med 2 och summera array, IntStream-implementation, Deitel & Deitel (s. 762)
+        int sum = IntStream.of(pnr).map(x -> x * 2).sum();
 
         return (sum % 10 == 0); // return true if the sum is evenly divisible by 10
     }
