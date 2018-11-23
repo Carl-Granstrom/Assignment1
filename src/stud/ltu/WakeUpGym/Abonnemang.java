@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Abonnemang {
     private Date startDatum;
-    /*
+    /**
     * Behövs en mer avancerad Date-tjoflöjt för att omsätta månader till prenumerationslängd
     * Eventuellt anta att en månad alltid är 30 dagar, men måste fortfarande räkna rätt på dagarna.
     */
