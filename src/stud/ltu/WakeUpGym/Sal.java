@@ -8,6 +8,7 @@ package stud.ltu.WakeUpGym;
  * TODO Behöver(?) printmetod för att skriva ut namnet på alla Platser.
  * TODO Behöver boolean[] för att registrera vilka platser som är bokade.
  * TODO Behöver printmetod för att skriva ut namnet på alla platser som inte är bokade.
+ * TODO Implementera metod för bokning. Uppdatera boolean-array.
  */
 
 public class Sal {
