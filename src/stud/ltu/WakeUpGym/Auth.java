@@ -8,13 +8,16 @@ import java.util.stream.IntStream;
  */
 public class Auth {
 
+    //anropa från Medlemsregister innan medlem lagras
 
-    Auth(Medlem medlem){
+    public Auth(Medlem medlem){
 
     }
 
     //precondition: char array c[] är 10 chars lång
     private static boolean pnrIsLegal(char[] c) {
+        assert (c.length == 10);    //assert precondition is true
+
         int[] numbers = new int[10];
         //convert char array to int array
         for (int i = 0; i < 10; i++){
