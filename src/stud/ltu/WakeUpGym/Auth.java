@@ -3,8 +3,8 @@ package stud.ltu.WakeUpGym;
 import java.util.stream.IntStream;
 
 /**
- * Några saker behöver kollas angående personnumret som slagits in, annars throw exception, och hantera detta
- * längre upp i programmet: endast 0-9 i char array, char array 10 lång.
+ * TODO Några saker behöver kollas angående personnumret som slagits in, annars throw exception, och hantera detta
+ * TODO längre upp i programmet: endast 0-9 i char array, char array 10 lång.
  */
 public class Auth {
 
