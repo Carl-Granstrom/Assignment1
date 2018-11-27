@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
+ * OBS!!! Används ej för närvarande!!!
+ *
  * Schema för en dag som tillåter att salar som ska användas för en viss aktivitet registreras på dagen.
  *
  * TODO Antagande: endast förmiddags- och eftermiddagspass pga för lat för att hantera tidsbokning.
