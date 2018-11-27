@@ -17,7 +17,7 @@ public class Sal {
     private int platserPerRad;
     //Använder inte ArrayList då jag inte vill att platserna ska flyttas runt i arrayen med några list-metoder.
     private final Plats[] platser = new Plats[rader * platserPerRad]; //skapa array med antal platser (null init)
-    private final boolean[] bokadPlats = new boolean[platser.length]; //detta är en acceptabel lösning, men ej optimal
+    private final boolean[] bokadPlats = new boolean[platser.length]; //detta är en "ok" lösning (false init)
     char[] alfabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'};
     /**
      * @param namn          salens namn
