@@ -20,7 +20,9 @@ public class Medlem {
     private int[] personNummer = new int[10];  //storing as array also permits leading zeroes
     private String namn;
     private Status medlStatus;
+    private Abonnemang abonnemang;
 
+    //inte jättevackert att be om user input i själva konstruktorn, men det får duga TODO rensa upp i skiten
     Medlem(){
         //initialisera medlemsstatus till inaktiv när ny medlem skapas
         Status medlStatus = Status.INACTIVE;
@@ -40,32 +42,47 @@ public class Medlem {
             }
             personNummer[i] = siffra;  //för in siffran i personNummer array.
         }
+        System.out.println("Hur många månader vill du vara medlem?\nSkriv in en siffra: ");
+        this.abonnemang = new Abonnemang(sc.nextInt(), medlStatus);
     }
 
     //skapa färdig testmedlem för registrering som default i MedlemsRegister
     Medlem(boolean b){
-        //initialisera medlemsstatus till inaktiv när ny medlem skapas
-        Status medlStatus = Status.ACTIVE;
+
         this.namn = "Erik Ladulås";
         int[] tmp = {8, 3, 0, 9, 2, 9, 0, 3, 1, 3};
         this.personNummer = tmp;
+        //initialisera medlemsstatus till inaktiv när ny medlem skapas
+        this.medlStatus = Status.ACTIVE;
+        this.abonnemang = new Abonnemang(16, this.medlStatus);
     }
 
-    protected Status getStatus(){
+    public Status getStatus(){
         return this.medlStatus;
     }
 
-    protected void setStatus(Status medlStatus){
-        this.medlStatus = medlStatus;
+    public Abonnemang getAbonnemang(){
+        return abonnemang;
+    }
+
+    //TODO inte färdig. Ska anropa input-logiken för antal månader och this.getStatus när detta flyttats ut från konstruktorn
+    public void setAbonnemang(){
+        //skapa ett nytt abonnemang på Medlem:en
+        this.abonnemang = new Abonnemang(12, Status.INACTIVE);
     }
 
     public int[] getPersonNummer() {
         return this.personNummer;
     }
 
-    //TODO Lägg till mer i toString? Typ pnr osv? Eller lägg detta i en print()-metod? Förmodligen bättre.
     @Override
     public String toString() {
-        return namn;
+        //build String out of int array personNummer
+        StringBuilder b = new StringBuilder();
+        for (int i : personNummer){
+            b.append(i);
+        }
+        //return namn, pnr och det datum som abonnemanget tar slut
+        return "Namn: " + namn + "\n Pnr: " + b.toString() + "\n" + getAbonnemang().toString() + "\n" + "Abbonemanget kostar: " + getAbonnemang().getKostnad() + ":-\n";
     }
 }
