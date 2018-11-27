@@ -22,4 +22,6 @@ public final class SalsRegister {
         register.add(new Sal("Himalaya", 5, 5));        //ph
         register.add(new Sal("Lilla Nirvana", 4, 6));   //ph
     }
+
+    //TODO FORTSÄTT HÄR MED: returnera alla salar som går att boka m.h.a. en print-metod för val i WakeUpFacade
 }
