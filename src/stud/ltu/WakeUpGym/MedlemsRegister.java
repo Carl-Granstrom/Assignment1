@@ -11,7 +11,12 @@ public final class MedlemsRegister {
     }
 
     private MedlemsRegister(){
+        /**
+         * Skapar statisk medlem "Magnus Ladulås" med pnr: 8309290313 och försöker lägga till i registret.
+         * Statisk medlem behövs för test av login-funktion.
+         */
 
+        addMedlem(new Medlem(true));
     }
 
     //behöver hantera/throw error om medlem ej har giltigt pnr

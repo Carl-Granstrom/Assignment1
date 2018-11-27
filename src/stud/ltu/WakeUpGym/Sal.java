@@ -17,6 +17,7 @@ public class Sal {
     private int platserPerRad;
     //Använder inte ArrayList då jag inte vill att platserna ska flyttas runt i arrayen med några list-metoder.
     private final Plats[] platser = new Plats[rader * platserPerRad]; //skapa array med antal platser (null init)
+    private final boolean[] bokadPlats = new boolean[platser.length]; //detta är en acceptabel lösning, men ej optimal
     char[] alfabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'};
     /**
      * @param namn          salens namn
@@ -27,7 +28,7 @@ public class Sal {
         this.namn = namn;
         this.rader = rader;
         this.platserPerRad = platserPerRad;
-        //fyll platser-array med Plats-objekt med rätt namn(1a, 1b, 1c, 2a, 2b, 2c)
+        //fyll platser-array med Plats-objekt med rätt namn(1a, 1b, 1c, 2a, 2b, 2c osv...)
         for (int i = 0; i < platser.length; i++){
             int rad = (i / platserPerRad) + 1;
             int alfabetsIndex = i % platserPerRad;
@@ -41,6 +42,21 @@ public class Sal {
         return namn;
     }
 
+    public void printLedigaPlatser() {
+
+        //för varje plats som inte är bokad, skriv ut platsen
+        for (int i = 0; i < bokadPlats.length ; i++) {
+            if (bokadPlats[i] == false){
+                System.out.println(platser[i].toString() + " ");
+            }
+        }
+    }
+
+    //boka platsen på arrayposition "i"
+    public void bokaPlats(int i) {
+        bokadPlats[i] = true;
+    }
+
     /**
      * Inre klass, pga composition-struktur.
      */
@@ -48,8 +64,7 @@ public class Sal {
         private int rad;
         private char plats;
 
-        //Konstruktor
-        //TODO Kanske kan gå att generera rad och plats automatiskt utifrån indexeringen av Plats:er i salarna
+        //Konstruktor, parametrarna kommer från Sal-konstruktorns loop
         Plats(int rad, char plats) {
             this.rad = rad;
             this.plats = plats;

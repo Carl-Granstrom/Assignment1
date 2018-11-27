@@ -42,6 +42,15 @@ public class Medlem {
         }
     }
 
+    //skapa färdig testmedlem för registrering som default i MedlemsRegister
+    Medlem(boolean b){
+        //initialisera medlemsstatus till inaktiv när ny medlem skapas
+        Status medlStatus = Status.ACTIVE;
+        this.namn = "Erik Ladulås";
+        int[] tmp = {8, 3, 0, 9, 2, 9, 0, 3, 1, 3};
+        this.personNummer = tmp;
+    }
+
     protected Status getStatus(){
         return this.medlStatus;
     }
