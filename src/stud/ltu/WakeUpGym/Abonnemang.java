@@ -1,27 +1,26 @@
 package stud.ltu.WakeUpGym;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Abonnemang {
-    private Date startDatum;
-    /**
-    * Behövs en mer avancerad Date-tjoflöjt för att omsätta månader till prenumerationslängd
-    * Eventuellt anta att en månad alltid är 30 dagar, men måste fortfarande räkna rätt på dagarna.
-    */
-    private Date slutDatum;
+    private LocalDate startDatum;
+    private LocalDate slutDatum;
     private int kostnad;
-    private boolean medlem = false; //
+    private Status medlem;
 
     //beräkna kostnaden för abonnemanget utifrån om personen redan är medlem eller ej samt antal månader.
-    Abonnemang(int manader, boolean medlem) {
-        this.medlem = medlem;
+    Abonnemang(int manader, Status medlem) {
+        this.startDatum = LocalDate.now();
+        this.slutDatum = startDatum.plusMonths(manader);
         this.kostnad = beraknaKostnad(manader, medlem);
+        this.medlem = Status.ACTIVE;
     }
 
     /*
     * Ersätt bool param med metodanr. till metod isMedlem(); lagra isMedlem(bool) i Medlem?
     */
-    public int beraknaKostnad(int manader, boolean isMedlem){
+    public int beraknaKostnad(int manader, Status s){
         int totalKostnad;  //placeholder
         final int basPris = 250;
         final int extra = 50;
@@ -46,10 +45,23 @@ public class Abonnemang {
         }
         /*Oklart hur detta ska hanteras längre upp i programmet, men denna uträkning måste ske innan medlemskapet
         registreras på personen. */
-        if (!isMedlem) {
+        if (medlem == s.INACTIVE) {
             totalKostnad += 100;
         }
 
         return totalKostnad;
+    }
+
+    public int getKostnad(){
+        return kostnad;
+    }
+
+    public LocalDate getSlutDatum(){
+        return slutDatum;
+    }
+
+    @Override
+    public String toString(){
+        return "Abonnemanget slutar: " + slutDatum.toString();
     }
 }
