@@ -10,12 +10,11 @@ public final class MedlemsRegister {
         return singleRegister;
     }
 
+    /**
+     * Skapar statisk medlem "Magnus Ladulås" med pnr: 8309290313 och försöker lägga till i registret.
+     * Statisk medlem behövs för test av login-funktion.
+     */
     private MedlemsRegister(){
-        /**
-         * Skapar statisk medlem "Magnus Ladulås" med pnr: 8309290313 och försöker lägga till i registret.
-         * Statisk medlem behövs för test av login-funktion.
-         */
-
         addMedlem(new Medlem(true));
     }
 

@@ -6,6 +6,7 @@ import java.util.Date;
 public class Abonnemang {
     private LocalDate startDatum;
     private LocalDate slutDatum;
+    private int manader;
     private int kostnad;
     private Status medlem;
 
@@ -13,8 +14,9 @@ public class Abonnemang {
     Abonnemang(int manader, Status medlem) {
         this.startDatum = LocalDate.now();
         this.slutDatum = startDatum.plusMonths(manader);
+        this.manader = manader;
         this.kostnad = beraknaKostnad(manader, medlem);
-        this.medlem = Status.ACTIVE;
+        this.medlem = medlem;
     }
 
     /*
@@ -45,7 +47,7 @@ public class Abonnemang {
         }
         /*Oklart hur detta ska hanteras längre upp i programmet, men denna uträkning måste ske innan medlemskapet
         registreras på personen. */
-        if (medlem == s.INACTIVE) {
+        if (s == Status.INACTIVE) {
             totalKostnad += 100;
         }
 
@@ -54,6 +56,10 @@ public class Abonnemang {
 
     public int getKostnad(){
         return kostnad;
+    }
+
+    public int getManader(){
+        return this.manader;
     }
 
     public LocalDate getSlutDatum(){

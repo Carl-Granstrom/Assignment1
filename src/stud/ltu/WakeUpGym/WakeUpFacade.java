@@ -107,6 +107,7 @@ public final class WakeUpFacade {
      */
     private static void loggaIn(){
         Scanner sc = new Scanner(System.in);
+        boolean isValid = false;
         int[] tmpPnr = new int[10];
 
         System.out.println("Vänligen skriv in ditt personnummer som tio siffror och tryck Enter för att logga in:");
@@ -125,11 +126,12 @@ public final class WakeUpFacade {
         for (Medlem medl : medlReg.medlemsRegister){
             if (Arrays.equals(medl.getPersonNummer(), tmpPnr)){
                 user = medl;
+                isValid = true;
                 System.out.print("Logged in as: \n" + user.toString());
             }
-            else {
-                System.out.println("Ogiltig inloggning, försök igen");
-            }
+        }
+        if (!isValid){
+            System.out.println("Ogiltig inloggning, försök igen");
         }
     }
 
@@ -153,7 +155,7 @@ public final class WakeUpFacade {
             System.out.println("Du måste logga in innan du kan förlänga ditt medlemskap!");
         } else {
             user.setAbonnemang();
-            System.out.println("Ett tolv månaders abonnemang har registrerats på dig! Grattis!");
+            System.out.println("Ett " + user.getAbonnemang().getManader() + " månaders abonnemang har registrerats på dig! Grattis!");
         }
     }
 

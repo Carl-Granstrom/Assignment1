@@ -1,6 +1,6 @@
 /*************************************************************************
  *  Syfte: Klassen är till för att hantera medlemmar i WakeUp:s system. Medlemmen skapas innan autentisering av
- *  personnummer sker. Autentisering måste ske innan lagring i medlemsregister.
+ *  personnummer sker. Autentisering måste sedan ske innan lagring i MedlemsRegister.
  *
  *  Programmet skrevs som en del i Systemvetenskapsutbildningen på Luleå Tekniska Högskola(LTU)
  *  inom kursen D0019N - Programutveckling med Java. Uppgift 2.
@@ -25,10 +25,10 @@ public class Medlem {
     //Konstruktor, anropar massa metoder som inte är statiska, men det "bör" inte vara ngt problem.
     Medlem(){
         //initialisera medlemsstatus till inaktiv när ny medlem skapas
-        Status medlStatus = Status.INACTIVE;
+        this.medlStatus = Status.INACTIVE;
         this.namn = namnInput();
         this.personNummer = pnrInput();
-        abonnemang = setAbonnemang(medlStatus);
+        setAbonnemang();
     }
 
     /**
@@ -53,8 +53,12 @@ public class Medlem {
         return abonnemang;
     }
 
-    public int[] getPersonNummer() {
+    public int[] getPersonNummer(){
         return this.personNummer;
+    }
+
+    public void setAbonnemang(){
+        this.abonnemang = skapaAbonnemang(this.getStatus());
     }
 
     private String namnInput(){
@@ -86,7 +90,7 @@ public class Medlem {
     }
 
     //skapa nytt abonnemang
-    private Abonnemang setAbonnemang(Status s){
+    public Abonnemang skapaAbonnemang(Status s){
         Scanner sc = new Scanner(System.in);
         System.out.println("Hur många månader vill du vara medlem?\nSkriv in en siffra: ");
         return new Abonnemang(sc.nextInt(), s); //skapa ett nytt abonnemang på Medlem:en
