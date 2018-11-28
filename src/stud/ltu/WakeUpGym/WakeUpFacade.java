@@ -46,7 +46,10 @@ public final class WakeUpFacade {
                             continueLoop = false;
                         } catch (InputMismatchException e) {
                             System.out.println(e);
+                        } catch (IllegalStateException e) {
+                            System.out.println(e);
                         } catch (Exception e) {
+                            System.out.println("Unexpected error type! Please submit bug report!");
                             System.out.println(e);
                         }
                     } while (continueLoop);
