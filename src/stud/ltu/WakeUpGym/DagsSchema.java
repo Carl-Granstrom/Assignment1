@@ -12,7 +12,6 @@ import java.util.Date;
  *
  * TODO Enda dagen som går att boka är 2018-12-24, pga orka.
  */
-
 public class DagsSchema {
     private Calendar datum;             //dagens datum
     private String dag;

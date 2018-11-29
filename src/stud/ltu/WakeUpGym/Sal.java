@@ -51,7 +51,9 @@ public class Sal {
 
     //boka platsen på arrayposition "i"
     public void bokaPlats(int i) {
-        bokadPlats[i] = true;
+        if (isLedig(i)) {
+            bokadPlats[i] = true;
+        }
     }
 
     //används ej atm TODO Eventuellt ta bort
@@ -81,7 +83,7 @@ public class Sal {
      * @param rad det radnummer som ska skrivas ut.
      */
     private void printPlatsLine(int rad){
-        for (int i = rad; i < (platserPerRad * (rad + 1)); i++){
+        for (int i = rad * platserPerRad; i < ((rad + 1) * platserPerRad); i++){
                 System.out.print("|" + platsOrBokad(i) + "|");
         }
         System.out.println();

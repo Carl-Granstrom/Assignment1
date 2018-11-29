@@ -2,6 +2,8 @@
  *  Syfte: Klassen är till för att hantera medlemmar i WakeUp:s system. Medlemmen skapas innan autentisering av
  *  personnummer sker. Autentisering måste sedan ske innan lagring i MedlemsRegister.
  *
+ *  Ej final p.g.a.
+ *
  *  Programmet skrevs som en del i Systemvetenskapsutbildningen på Luleå Tekniska Högskola(LTU)
  *  inom kursen D0019N - Programutveckling med Java. Uppgift 2.
  *
