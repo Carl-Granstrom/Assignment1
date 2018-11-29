@@ -18,7 +18,7 @@ public class Sal {
     //Använder inte ArrayList då jag inte vill att platserna ska flyttas runt i arrayen med några list-metoder.
     private Plats[] platser; //skapa array med antal platser (null init)
     private boolean[] bokadPlats; //detta är en "ok" lösning (false init)
-    char[] alfabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'};
+    char[] alfabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't'};
     /**
      * @param namn          salens namn
      * @param rader         antal rader i salen
@@ -57,16 +57,26 @@ public class Sal {
     }
 
     //används ej atm TODO Eventuellt ta bort
-    public boolean[] getPlatsStatus() {
+    public boolean[] getBokadPlats() {
         //returnera array med information om platsen är bokad(ej bokad plats=false, bokad plats=true)
         return bokadPlats;
     }
 
+    //Skriv ut en "tvådimensionell" representation av salens platser
     public void printSal(){
-        printSolidLine();
-        for (int i = 0; i < rader; i++){
-            printPlatsLine(i);
+        //om salens bredd och djup båda är mindre än tio, använd den mer avancerade representationen för utskrift
+        if ((this.rader < 10) && (this.platserPerRad < 10)) {
             printSolidLine();
+            for (int i = 0; i < rader; i++) {
+                printPlatsLine(i);
+                printSolidLine();
+            }
+        //om salen är väldigt stor, använd den kompakta utskriftsmetoden
+        } else
+            {
+            for (int i = 0; i < rader; i++) {
+                printPlatsLineCompact(i);
+            }
         }
     }
 
@@ -89,6 +99,15 @@ public class Sal {
         System.out.println();
     }
 
+    //Skriv ut en mer kompakt rad för större salar
+    private void printPlatsLineCompact(int rad){
+        for (int i = rad * platserPerRad; i < ((rad + 1) * platserPerRad); i++){
+            System.out.printf("%-4s", platsOrBokad(i));
+        }
+        System.out.println();
+    }
+
+    //skriv ut Platsens namn eller, om platsen är bokad, "XX".
     private String platsOrBokad(int i){
         if (bokadPlats[i] == false) {
             return platser[i].toString();
