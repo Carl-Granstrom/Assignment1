@@ -16,8 +16,8 @@ public class Sal {
     private int rader;
     private int platserPerRad;
     //Använder inte ArrayList då jag inte vill att platserna ska flyttas runt i arrayen med några list-metoder.
-    private final Plats[] platser = new Plats[rader * platserPerRad]; //skapa array med antal platser (null init)
-    private final boolean[] bokadPlats = new boolean[platser.length]; //detta är en "ok" lösning (false init)
+    private Plats[] platser; //skapa array med antal platser (null init)
+    private boolean[] bokadPlats; //detta är en "ok" lösning (false init)
     char[] alfabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'};
     /**
      * @param namn          salens namn
@@ -28,6 +28,8 @@ public class Sal {
         this.namn = namn;
         this.rader = rader;
         this.platserPerRad = platserPerRad;
+        this.platser = new Plats[rader * platserPerRad];
+        this.bokadPlats = new boolean[rader * platserPerRad];
         //fyll platser-array med Plats-objekt med rätt namn(1a, 1b, 1c, 2a, 2b, 2c osv...)
         for (int i = 0; i < platser.length; i++){
             int rad = (i / platserPerRad) + 1;
@@ -42,19 +44,55 @@ public class Sal {
         return namn;
     }
 
-    public void printLedigaPlatser() {
-
-        //för varje plats som inte är bokad, skriv ut platsen
-        for (int i = 0; i < bokadPlats.length ; i++) {
-            if (bokadPlats[i] == false){
-                System.out.println(platser[i].toString() + " ");
-            }
-        }
+    public boolean isLedig(int i){
+        assert i < platser.length;      //Assert legal index into array
+        return !bokadPlats[i];
     }
 
     //boka platsen på arrayposition "i"
     public void bokaPlats(int i) {
         bokadPlats[i] = true;
+    }
+
+    //används ej atm TODO Eventuellt ta bort
+    public boolean[] getPlatsStatus() {
+        //returnera array med information om platsen är bokad(ej bokad plats=false, bokad plats=true)
+        return bokadPlats;
+    }
+
+    public void printSal(){
+        printSolidLine();
+        for (int i = 0; i < rader; i++){
+            printPlatsLine(i);
+            printSolidLine();
+        }
+    }
+
+    //skriv ut avskiljare mellan platserna vågrätt, samt övre och under kant
+    private void printSolidLine(){
+        for (int i = 0; i < platserPerRad; i++){
+            System.out.print("----");
+        }
+        System.out.println();
+    }
+
+    /**
+     * Skriv ut platsnummer för lediga platser, XX för upptagna
+     * @param rad det radnummer som ska skrivas ut.
+     */
+    private void printPlatsLine(int rad){
+        for (int i = rad; i < (platserPerRad * (rad + 1)); i++){
+                System.out.print("|" + platsOrBokad(i) + "|");
+        }
+        System.out.println();
+    }
+
+    private String platsOrBokad(int i){
+        if (bokadPlats[i] == false) {
+            return platser[i].toString();
+        } else {
+            return "XX";
+        }
     }
 
     /**

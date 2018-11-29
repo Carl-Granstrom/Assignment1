@@ -19,17 +19,11 @@ public final class WakeUpFacade {
     private static Medlem user;
     private static MedlemsRegister medlReg = MedlemsRegister.getInstance();
     private static SalsRegister salsReg = SalsRegister.getInstance();
+    //konstruktor
+    WakeUpFacade(){}
 
     /**
-     * konstruktor
-     */
-    WakeUpFacade(){
-
-    }
-
-
-    /**
-     * Visa meny
+     * Visa meny.
      */
     private static void visaMeny(){
         while (true) {
