@@ -1,5 +1,9 @@
 package stud.ltu.WakeUpGym;
 
+/**
+ * Test-klass för Sal-klassen som testar utskrifsfunktionen.
+ * Kan för närvarande ge ArrayIndexOutOfBoundsExceptions om rader/platyserPerRad ändras till för stora värden.
+ */
 public class SalTest {
     public static void main(String[] args){
         Sal s1 = new Sal("Himalaya", 4, 5);
