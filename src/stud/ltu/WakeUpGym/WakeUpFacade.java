@@ -33,60 +33,42 @@ public final class WakeUpFacade {
             //ta input till menyval TODO Error handling på inkorrekt input
             byte menyVal = sc.nextByte();
             switch (menyVal) {
+
                 case 1:
                     do {
                         try {
                             registreraMedlem();
-                            continueLoop = false;
-                        } catch (InputMismatchException e) {
-                            System.out.println(e);
-                        } catch (IllegalStateException e) {
-                            System.out.println(e);
-                        } catch (Exception e) {
+                            continueLoop = false;}
+                        catch (InputMismatchException e) { System.out.println(e);}
+                        catch (IllegalStateException e) { System.out.println(e);}
+                        catch (Exception e) {
                             System.out.println("Unexpected error type! Please submit bug report!");
                             System.out.println(e);
                         }
                     } while (continueLoop);
-                    continueLoop = true;
                     break;
 
                 case 2:
                     do {
                         try {
-                            //logga in som testmedlem "Magnus Ladulås"
                             loggaIn();
                             continueLoop = false;
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
+                        } catch (Exception e) { System.out.println(e);}
                     } while (continueLoop);
-                    continueLoop = true;
                     break;
 
                 case 3:
                     do {
                         try {
-                            //
                             forlangMedlemskap();
                             continueLoop = false;
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
+                        } catch (Exception e) { System.out.println(e);}
                     } while (continueLoop);
-                    continueLoop = true;
                     break;
 
                 case 4:
-                    do {
-                        try {
-                            //
-                            bokaPlats();
-                            continueLoop = false;
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
-                    } while (continueLoop);
-                    continueLoop = true;
+                    try { bokaPlats(user); }
+                    catch (Exception e) { System.out.println(e);}
                     break;
 
                 case 5:
@@ -102,14 +84,28 @@ public final class WakeUpFacade {
      * TODO Snygga till och flytta ut vissa delar till metod(er)
      */
     private static void loggaIn(){
+        int[] tmpPnr = getPnrInput();   //hämta int-array med personnummer från användaren.
+
+        //Sök i registret efter ett matchande personnummer
+        Medlem tmpMedlem = sokRegister(tmpPnr);     //returnera första medlemmen med matchande personnummer från registret
+        if (tmpMedlem == null){
+            System.out.println("Ogiltig inloggning, försök igen");  //Skriv ut felmeddelande,
+        } else{
+            user = tmpMedlem;
+            System.out.printf("Logged in as: %n" + user.toString());
+        }
+    }
+
+    private static int[] getPnrInput(){
         Scanner sc = new Scanner(System.in);
-        boolean isValid = false;
         int[] tmpPnr = new int[10];
 
         System.out.println("Vänligen skriv in ditt personnummer som tio siffror och tryck Enter för att logga in:");
         String tmpString = sc.nextLine();  //store input String
+
         char[] tmpCharArray = tmpString.toCharArray(); //convert String to charArray
         //move the 10 first characters of the charArray to personNummer int-array.
+
         for (int i = 0; i < 10; i++){
             char c = tmpCharArray[i];
             int siffra = Character.getNumericValue(c);
@@ -118,17 +114,10 @@ public final class WakeUpFacade {
             }
             tmpPnr[i] = siffra;  //för in siffran i temporär array för att matcha mot pnr i MedlemsRegister
         }
-        //iterera över alla medlemmarna och jämför deras pnr med det inslagna.
-        Medlem tmpMedlem = sokRegister(tmpPnr);
-        if (tmpMedlem == null){
-            System.out.println("Ogiltig inloggning, försök igen");
-        } else{
-            user = tmpMedlem;
-            isValid = true;
-            System.out.print("Logged in as: \n" + user.toString());
-        }
+        return tmpPnr;
     }
-    //Sök efter personnummret i registret
+
+    //iterera över alla medlemmarna och jämför deras pnr med det inslagna
     private static Medlem sokRegister(int[] tmpPnr){
         Medlem tmpMedl = null;
         for (Medlem medl : medlReg.medlemsRegister) {
@@ -163,18 +152,27 @@ public final class WakeUpFacade {
     }
 
     private static void avsluta(){
-        //Lägg in kod för att spara saker innan avslut???
         System.exit(0);
     }
 
-    //Använd medlem-klassen för att skapa medlem-objekt. Kanske göra en MedlemsRegister-klass också?
+    //Använd Medlem-klassen för att skapa medlem-objekt.
     private static void registreraMedlem(){
         medlReg.addMedlem(new Medlem());
     }
 
     //placeholder method
-    private static void bokaPlats(){
-
+    private static void bokaPlats(Medlem m){
+        if (user == null){
+            throw new IllegalStateException("Du behöver logga in innan du kan boka en plats!");
+        } else {
+            int n = Aktivitet.values().length;
+            System.out.printf("Vilken aktivitet vill du boka? Skriv en siffra mellan 1 och %d", n);
+            //Skriv ut möjliga aktiviteter ur Aktivitet-enum och numrera automatiskt.
+            for (Aktivitet a : Aktivitet.values()){
+                System.out.printf("%n%d.%s", a.ordinal() + 1, a);
+            }
+        }
+        //TODO Do stuff!
     }
 
     //main method
