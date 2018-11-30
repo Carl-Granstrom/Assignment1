@@ -23,5 +23,18 @@ public final class SalsRegister {
         register.add(new Sal(Aktivitet.AEROBICS ,"Lilla Nirvana", 4, 6));   //ph
     }
 
-    //TODO FORTSÄTT HÄR MED: returnera alla salar som går att boka m.h.a. en print-metod för val i WakeUpFacade
+    /**
+     * Hämta första salen i register som erbjuder aktiviteten a
+     * TODO Eventuellt returnera flera salar eller den första salen med tomma platser?
+     * @param a den typ av aktivitet som Medlem user försöker boka från WakeUpFacade.bokaPlats(Medlem m)
+     * @return Den sal som har aktiviteten. Inga Salar returnerar null.
+     */
+    public Sal getAktivitetsSal(Aktivitet a){
+        for (Sal s : register){
+            if (s.getAktivitet() == a){
+                return s;
+            }
+        }
+        return null;
+    }
 }
