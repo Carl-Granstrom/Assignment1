@@ -173,7 +173,7 @@ public final class WakeUpFacade {
         }
     }
 
-    static private char[] platsValInput(){
+    private static char[] platsValInput(){
         char[] val = new char[2];
         Scanner sc = new Scanner(System.in);
         System.out.println("Vänligen skriv ditt platsval på formatet [Bokstav][Siffra](ex: 4c): ");
