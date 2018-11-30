@@ -14,7 +14,7 @@ public class Auth {
 
     /**
      * precondition medlemmens int-array personNummer är 10 lång
-     * TODO kolla att algon funkar som den ska, verkar eventuellt returnera true jämt
+     * TODO Skilj på 101-åringar och 1-åringar?
      */
     public static boolean pnrIsLegal(Medlem medlem) {
         int[] pnr = medlem.getPersonNummer();
