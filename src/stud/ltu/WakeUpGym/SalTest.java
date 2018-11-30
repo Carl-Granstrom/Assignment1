@@ -6,8 +6,8 @@ package stud.ltu.WakeUpGym;
  */
 public class SalTest {
     public static void main(String[] args){
-        Sal s1 = new Sal("Himalaya", 4, 5);
-        Sal s2 = new Sal("Yogi", 10, 12);
+        Sal s1 = new Sal(Aktivitet.AEROBICS ,"Himalaya", 4, 5);
+        Sal s2 = new Sal(Aktivitet.YOGA ,"Yogi", 10, 12);
 
         s1.bokaPlats(3);
         s1.bokaPlats(3);

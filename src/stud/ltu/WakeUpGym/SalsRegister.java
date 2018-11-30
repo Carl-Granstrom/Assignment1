@@ -18,9 +18,9 @@ public final class SalsRegister {
      * Skapar i nuläget några salar statiskt som en placeholder för test.
      */
     private SalsRegister() {
-        register.add(new Sal("Lotusblomman",3,3));      //ph, move to method
-        register.add(new Sal("Himalaya", 5, 5));        //ph
-        register.add(new Sal("Lilla Nirvana", 4, 6));   //ph
+        register.add(new Sal(Aktivitet.YOGA ,"Lotusblomman",3,3));      //ph, move to method
+        register.add(new Sal(Aktivitet.SPINNING ,"Racecourse", 5, 5));        //ph
+        register.add(new Sal(Aktivitet.AEROBICS ,"Lilla Nirvana", 4, 6));   //ph
     }
 
     //TODO FORTSÄTT HÄR MED: returnera alla salar som går att boka m.h.a. en print-metod för val i WakeUpFacade

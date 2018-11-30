@@ -5,13 +5,12 @@ package stud.ltu.WakeUpGym;
  * Hade ursprungligen Sal som final pga PoLP, men det kan ju tänkas att man vill använda arv för olika typer
  * av salar om man utökar verksamheten.
  *
- * TODO Behöver(?) printmetod för att skriva ut namnet på alla Platser.
- * TODO Behöver boolean[] för att registrera vilka platser som är bokade.
  * TODO Behöver printmetod för att skriva ut namnet på alla platser som inte är bokade.
  * TODO Implementera metod för bokning. Uppdatera boolean-array.
  */
 
 public class Sal {
+    private Aktivitet aktivitet;
     private String namn;
     private int rader;
     private int platserPerRad;
@@ -24,7 +23,8 @@ public class Sal {
      * @param rader         antal rader i salen
      * @param platserPerRad antal platser per rad
      */
-    Sal(String namn, int rader, int platserPerRad) {
+    Sal(Aktivitet aktivitet, String namn, int rader, int platserPerRad) {
+        this.aktivitet = aktivitet;
         this.namn = namn;
         this.rader = rader;
         this.platserPerRad = platserPerRad;
