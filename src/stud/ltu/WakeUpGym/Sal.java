@@ -1,4 +1,7 @@
 package stud.ltu.WakeUpGym;
+
+import java.util.ArrayList;
+
 /**
  * Förutsätter jämnt antal platser per rad, är en acceptabel lösning i nuläget.
  *
@@ -11,6 +14,7 @@ package stud.ltu.WakeUpGym;
 
 public class Sal {
     private Aktivitet aktivitet;
+    private ArrayList<Medlem> harBokat = new ArrayList<Medlem>();
     private String namn;
     private int rader;
     private int platserPerRad;
@@ -44,6 +48,14 @@ public class Sal {
         return namn;
     }
 
+    public void setAktivitet(Aktivitet aktivitet){
+        this.aktivitet = aktivitet;
+    }
+
+    public Aktivitet getAktivitet(){
+        return this.aktivitet;
+    }
+
     public boolean isLedig(int i){
         assert i < platser.length;      //Assert legal index into array
         return !bokadPlats[i];
@@ -54,12 +66,6 @@ public class Sal {
         if (isLedig(i)) {
             bokadPlats[i] = true;
         }
-    }
-
-    //används ej atm TODO Eventuellt ta bort
-    public boolean[] getBokadPlats() {
-        //returnera array med information om platsen är bokad(ej bokad plats=false, bokad plats=true)
-        return bokadPlats;
     }
 
     //Skriv ut en "tvådimensionell" representation av salens platser
@@ -114,6 +120,19 @@ public class Sal {
         } else {
             return "XX";
         }
+    }
+
+    public void addBokat (Medlem medlem){
+        harBokat.add(medlem);
+    }
+
+    public boolean redanBokat (Medlem user){
+        for (Medlem m : harBokat) {
+            if (m == user){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
