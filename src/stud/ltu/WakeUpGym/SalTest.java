@@ -9,37 +9,34 @@ public class SalTest {
         Sal s1 = new Sal(Aktivitet.AEROBICS ,"Himalaya", 4, 5);
         Sal s2 = new Sal(Aktivitet.YOGA ,"Yogi", 10, 12);
 
-        s1.bokaPlats(3);
-        s1.bokaPlats(3);
-        s1.bokaPlats(8);
-        s1.bokaPlats(3);
-        s1.bokaPlats(11);
-        s1.bokaPlats(17);
+        char[] a = new char[] {'1', 'a'};
+        char[] b = new char[] {'1', 'c'};
+        char[] c = new char[] {'2', 'a'};
+        char[] d = new char[] {'2', 'b'};
+        char[] e = new char[] {'2', 'c'};
+        char[] f = new char[] {'2', 'd'};
+        char[] g = new char[] {'7', 'e'};
+        char[] h = new char[] {'3', 'a'};
+        char[] i = new char[] {'3', 'g'};
+        char[] j = new char[] {'6', 'h'};
+
+        Medlem m = new Medlem(true);
+
+        s1.bokaPlats(a, m);
+        s1.bokaPlats(b, m);
+        s1.bokaPlats(c, m);
+        s1.bokaPlats(d, m);
+        s1.bokaPlats(e, m);
+        s1.bokaPlats(f, m);
 
         s1.printSal();
 
-        s2.bokaPlats(3);
-        s2.bokaPlats(8);
-        s2.bokaPlats(18);
-        s2.bokaPlats(19);
-        s2.bokaPlats(20);
-        s2.bokaPlats(22);
-        s2.bokaPlats(13);
-        s2.bokaPlats(18);
-        s2.bokaPlats(28);
-        s2.bokaPlats(29);
-        s2.bokaPlats(30);
-        s2.bokaPlats(32);
-        s2.bokaPlats(49);
-        s2.bokaPlats(50);
-        s2.bokaPlats(51);
-        s2.bokaPlats(67);
-        s2.bokaPlats(69);
-        s2.bokaPlats(87);
-        s2.bokaPlats(103);
-        s2.bokaPlats(108);
-        s2.bokaPlats(118);
-        s2.bokaPlats(119);
+        s2.bokaPlats(a, m);
+        s2.bokaPlats(b, m);
+        s2.bokaPlats(c, m);
+        s2.bokaPlats(g, m);
+        s2.bokaPlats(h, m);
+        s2.bokaPlats(i, m);
 
         s2.printSal();
     }

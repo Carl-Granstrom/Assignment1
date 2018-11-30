@@ -52,6 +52,10 @@ public class Sal {
         this.aktivitet = aktivitet;
     }
 
+    public String getNamn(){
+        return this.namn;
+    }
+
     public Aktivitet getAktivitet(){
         return this.aktivitet;
     }
@@ -61,11 +65,16 @@ public class Sal {
         return !bokadPlats[i];
     }
 
-    //boka platsen på arrayposition "i"
-    public void bokaPlats(int i) {
+    //konvertera chararray på formatet {'2', 'h'} till salsindex i. Boka platsen på arrayposition "i"
+    public void bokaPlats(char[] plats, Medlem m) {
+        //konvertera char[2] till Plats[]-index
+        int radNummer = Character.getNumericValue(plats[0]);        //siffran(rad)
+        int platsNummer = new String(alfabet).indexOf(plats[1]);    //bokstaven(plats på raden)
+        int i = ((radNummer - 1) * platserPerRad) + platsNummer;
         if (isLedig(i)) {
             bokadPlats[i] = true;
         }
+        addBokat(m);
     }
 
     //Skriv ut en "tvådimensionell" representation av salens platser

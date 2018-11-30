@@ -19,7 +19,7 @@ public final class SalsRegister {
      */
     private SalsRegister() {
         register.add(new Sal(Aktivitet.YOGA ,"Lotusblomman",3,3));      //ph, move to method
-        register.add(new Sal(Aktivitet.SPINNING ,"Racecourse", 5, 5));        //ph
+        register.add(new Sal(Aktivitet.SPINNING ,"Racecourse", 6, 12));        //ph
         register.add(new Sal(Aktivitet.AEROBICS ,"Lilla Nirvana", 4, 6));   //ph
     }
 

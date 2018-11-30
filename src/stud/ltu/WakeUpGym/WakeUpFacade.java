@@ -80,8 +80,13 @@ public final class WakeUpFacade {
         }
     }
 
-    /**Autentisering
-     * TODO Snygga till och flytta ut vissa delar till metod(er)
+    //Använd Medlem-klassen för att skapa medlem-objekt.
+    private static void registreraMedlem(){
+        medlReg.addMedlem(new Medlem());
+    }
+
+    /**
+     * Kontroll av personnummret.
      */
     private static void loggaIn(){
         int[] tmpPnr = getPnrInput();   //hämta int-array med personnummer från användaren.
@@ -128,20 +133,6 @@ public final class WakeUpFacade {
         return tmpMedl;
     }
 
-    /**
-     * Aktivitetsbokning
-     * TODO Hela logiken i Sal-klassen
-     * TODO Bokningsbara platser måste visas innan valet, ej bokningsbara ska inte erbjudas. Det är frustrerande.
-     * TODO Representera platserna med ngn typ av skärmutskrift för att visualisera salsplatserna
-     */
-    private static void bokaAktivitet(){
-        if (user == null){
-            System.out.println("Du måste logga in innan du kan boka en plats");
-        } else if (user.getStatus() != Status.ACTIVE){    //endast aktiva medlemmar får boka en plats
-
-        }
-    }
-
     private static void forlangMedlemskap(){
         if (user == null) {
             System.out.println("Du måste logga in innan du kan förlänga ditt medlemskap!");
@@ -151,28 +142,72 @@ public final class WakeUpFacade {
         }
     }
 
-    private static void avsluta(){
-        System.exit(0);
-    }
-
-    //Använd Medlem-klassen för att skapa medlem-objekt.
-    private static void registreraMedlem(){
-        medlReg.addMedlem(new Medlem());
-    }
-
-    //placeholder method
+    //Visa möjliga alternativ på aktiviteter och boka plats på en aktivitet
     private static void bokaPlats(Medlem m){
+        Sal s;
+        int val = -1;       //sentinel value
         if (user == null){
             throw new IllegalStateException("Du behöver logga in innan du kan boka en plats!");
         } else {
-            int n = Aktivitet.values().length;
-            System.out.printf("Vilken aktivitet vill du boka? Skriv en siffra mellan 1 och %d", n);
-            //Skriv ut möjliga aktiviteter ur Aktivitet-enum och numrera automatiskt.
-            for (Aktivitet a : Aktivitet.values()){
-                System.out.printf("%n%d.%s", a.ordinal() + 1, a);
+            geAktivitetsAlternativ();
+        }
+
+        Scanner sc = new Scanner(System.in);
+        try {
+            val = Integer.parseInt(sc.nextLine()) - 1;     //Läs in menyvalet
+        } catch (NumberFormatException e){e.printStackTrace();}
+
+        if ((val >= 0) && (val <= Aktivitet.values().length)){  //kontrollera giltigt val
+            Aktivitet tmp = getAktivitet(val);                  //hämta vilken aktivitet som valet är associerat med
+            s = salsReg.getAktivitetsSal(tmp);                  //använd Aktivitet:en för att matcha mot Sal i registret
+            System.out.println(s.getNamn() + " - "
+                    + s.getAktivitet().toString());             //Skriv ut namn på salen och den aktivitet som utförs där
+            s.printSal();                                       //skriv ut en representation av salens platser
+        } else {
+            throw new IllegalArgumentException("Aktiviteten finns inte, vänligen ange giltig aktivitet:");
+        }
+        if (s.redanBokat(m)){
+            throw new IllegalCallerException("Du har redan bokat en plats på det här passet!");
+        } else {
+            s.bokaPlats(platsValInput(), m);
+        }
+    }
+
+    static private char[] platsValInput(){
+        char[] val = new char[2];
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Vänligen skriv ditt platsval på formatet [Bokstav][Siffra](ex: 4c): ");
+        String tmpString = sc.nextLine();  //store input String
+        char[] tmpCharArray = tmpString.toCharArray(); //convert String to charArray
+        //move the 2 first characters of the charArray to val char[].
+        for (int i = 0; i < 2; i++) {
+            val[i] = tmpCharArray[i];
+        }
+        return val;
+    }
+
+    private static void geAktivitetsAlternativ(){
+        int n = Aktivitet.values().length;
+        System.out.printf("Vilken aktivitet vill du boka? Skriv en siffra mellan 1 och %d", n);
+        //Skriv ut möjliga aktiviteter ur Aktivitet-enum och numrera automatiskt.
+        for (Aktivitet a : Aktivitet.values()){
+            System.out.printf("%n%d.%s", a.ordinal() + 1, a);
+        }
+        System.out.println();
+    }
+
+    private static Aktivitet getAktivitet(int val){
+        for (Aktivitet a : Aktivitet.values()){
+            if(val == a.ordinal()){
+                return a;
             }
         }
-        //TODO Do stuff!
+        return null;
+    }
+
+    //avsluta programmet
+    private static void avsluta(){
+        System.exit(0);
     }
 
     //main method
