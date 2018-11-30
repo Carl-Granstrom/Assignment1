@@ -106,6 +106,7 @@ public class Medlem {
             b.append(i);
         }
         //return namn, pnr och det datum som abonnemanget tar slut
-        return "Namn: " + namn + "\nPnr: " + b.toString() + "\n" + getAbonnemang().toString() + "\n" + "Abbonemanget kostar: " + getAbonnemang().getKostnad() + ":-\n";
+        return ("Namn: " + namn + "\nPnr: " + b.toString() + "\n" + getAbonnemang().toString() +
+                "\n" + "Abbonemanget kostar: " + getAbonnemang().getKostnad() + ":-\n");
     }
 }
