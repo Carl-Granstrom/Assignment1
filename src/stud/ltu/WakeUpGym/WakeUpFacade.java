@@ -99,8 +99,7 @@ public final class WakeUpFacade {
     }
 
     /**Autentisering
-     * Förslag på förbättringar:
-     * 1. Lös med klasser och objekt istället för bara via metod.
+     * TODO Snygga till och flytta ut vissa delar till metod(er)
      */
     private static void loggaIn(){
         Scanner sc = new Scanner(System.in);
@@ -120,18 +119,25 @@ public final class WakeUpFacade {
             tmpPnr[i] = siffra;  //för in siffran i temporär array för att matcha mot pnr i MedlemsRegister
         }
         //iterera över alla medlemmarna och jämför deras pnr med det inslagna.
-        for (Medlem medl : medlReg.medlemsRegister){
-            if (Arrays.equals(medl.getPersonNummer(), tmpPnr)){
-                user = medl;
-                isValid = true;
-                System.out.print("Logged in as: \n" + user.toString());
-            }
-        }
-        if (!isValid){
+        Medlem tmpMedlem = sokRegister(tmpPnr);
+        if (tmpMedlem == null){
             System.out.println("Ogiltig inloggning, försök igen");
+        } else{
+            user = tmpMedlem;
+            isValid = true;
+            System.out.print("Logged in as: \n" + user.toString());
         }
     }
-
+    //Sök efter personnummret i registret
+    private static Medlem sokRegister(int[] tmpPnr){
+        Medlem tmpMedl = null;
+        for (Medlem medl : medlReg.medlemsRegister) {
+            if (Arrays.equals(medl.getPersonNummer(), tmpPnr)){
+                tmpMedl = medl;
+            }
+        }
+        return tmpMedl;
+    }
 
     /**
      * Aktivitetsbokning
