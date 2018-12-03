@@ -170,5 +170,4 @@ public class Sal {
             return Integer.toString(rad) + plats;
         }
     }
-
 }

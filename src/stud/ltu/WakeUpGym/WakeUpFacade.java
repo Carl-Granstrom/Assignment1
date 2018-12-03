@@ -132,7 +132,7 @@ public final class WakeUpFacade {
     }
 
     //Visa möjliga alternativ på aktiviteter och boka plats på en aktivitet
-    private static void bokaPlats(Medlem m){
+    private static void bokaPlats(Medlem m) throws IllegalStateException, IllegalArgumentException, IllegalCallerException{
         Sal s;
         int val = -1;       //sentinel value
         if (user == null){
@@ -144,7 +144,7 @@ public final class WakeUpFacade {
         Scanner sc = new Scanner(System.in);
         try {
             val = Integer.parseInt(sc.nextLine()) - 1;          //Läs in menyvalet
-        } catch (NumberFormatException e){e.printStackTrace();}
+        } catch (NumberFormatException e){e.printStackTrace();} //Endast för test, inte att rekommendera!
 
         if ((val >= 0) && (val <= Aktivitet.values().length)){  //kontrollera giltigt val
             Aktivitet tmp = getAktivitet(val);                  //hämta vilken aktivitet som valet är associerat med
