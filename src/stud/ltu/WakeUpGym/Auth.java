@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
  * Statisk klass för att samla autentiseringsmetoder i programmet.
  * TODO Auth-metoder för medlemmar i systemet: betalande eller ej?
  */
-public class Auth {
+class Auth {
 
     //går ej att instantiera
     private Auth(){
@@ -16,7 +16,7 @@ public class Auth {
      * precondition medlemmens int-array personNummer är 10 lång
      * TODO Skilj på 101-åringar och 1-åringar?
      */
-    public static boolean pnrIsLegal(Medlem medlem) {
+    static boolean pnrIsLegal(Medlem medlem) {
         int[] pnr = medlem.getPersonNummer();
         int sum = 0;
         assert (pnr.length == 10);    //assert precondition is true

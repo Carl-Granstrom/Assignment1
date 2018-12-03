@@ -2,11 +2,11 @@ package stud.ltu.WakeUpGym;
 
 import java.util.ArrayList;
 
-public final class MedlemsRegister {
+final class MedlemsRegister {
     private static MedlemsRegister singleRegister = new MedlemsRegister();
     ArrayList<Medlem> medlemsRegister = new ArrayList<Medlem>();
 
-    public static MedlemsRegister getInstance() {
+    static MedlemsRegister getInstance() {
         return singleRegister;
     }
 
@@ -19,7 +19,7 @@ public final class MedlemsRegister {
     }
 
     //Lägg till en medlem i registret.
-    public void addMedlem(Medlem medlem){
+    void addMedlem(Medlem medlem){
         if (Auth.pnrIsLegal(medlem)){
             medlemsRegister.add(medlem);
         }

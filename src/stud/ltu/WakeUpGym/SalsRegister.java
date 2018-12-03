@@ -5,12 +5,12 @@ import java.util.ArrayList;
 /**
  * Testar Singleton-pattern
  */
-public final class SalsRegister {
+final class SalsRegister {
     private static SalsRegister singleRegister = new SalsRegister();
 
-    ArrayList<Sal> register = new ArrayList<>();
+    private ArrayList<Sal> register = new ArrayList<>();
 
-    public static SalsRegister getInstance() {
+    static SalsRegister getInstance() {
         return singleRegister;
     }
 
@@ -29,7 +29,7 @@ public final class SalsRegister {
      * @param a den typ av aktivitet som Medlem user försöker boka från WakeUpFacade.bokaPlats(Medlem m)
      * @return Den sal som har aktiviteten. Inga Salar returnerar null.
      */
-    public Sal getAktivitetsSal(Aktivitet a){
+    Sal getAktivitetsSal(Aktivitet a){
         for (Sal s : register){
             if (s.getAktivitet() == a){
                 return s;

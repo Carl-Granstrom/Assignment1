@@ -29,7 +29,7 @@ public class Medlem {
         //initialisera medlemsstatus till inaktiv när ny medlem skapas
         this.medlStatus = Status.INACTIVE;
         this.namn = namnInput();
-        this.personNummer = pnrInput();
+        this.personNummer = getPnrInput();
         setAbonnemang();
     }
 
@@ -73,12 +73,22 @@ public class Medlem {
         }
     }
 
-    private int[] pnrInput(){
-        int[] pnr = new int[10];
+    //skapa nytt abonnemang
+    private Abonnemang skapaAbonnemang(Status s){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Vänligen skriv in ditt personnummer som tio siffror och tryck Enter:");
+        System.out.println("Hur många månader vill du vara medlem?\nSkriv in en siffra: ");
+        return new Abonnemang(sc.nextInt(), s); //skapa ett nytt abonnemang på Medlem:en
+    }
+
+    static int[] getPnrInput(){
+        Scanner sc = new Scanner(System.in);
+        int[] tmpPnr = new int[10];
+
+        System.out.println("Vänligen skriv in ditt personnummer som tio siffror och tryck Enter för att logga in:");
         String tmpString = sc.nextLine();  //store input String
+
         char[] tmpCharArray = tmpString.toCharArray(); //convert String to charArray
+        if (tmpCharArray.length != 10) { throw new InputMismatchException("Felaktig längd på personnummret!"); }
         //move the 10 first characters of the charArray to personNummer int-array.
         for (int i = 0; i < 10; i++){
             char c = tmpCharArray[i];
@@ -86,16 +96,9 @@ public class Medlem {
             if (siffra > 9 || siffra < 0) {
                 throw new InputMismatchException("Input contains non-numeric characters!");
             }
-            pnr[i] = siffra;  //för in siffran i personNummer array.
+            tmpPnr[i] = siffra;  //för in siffran i temporär array för att matcha mot pnr i MedlemsRegister
         }
-        return pnr;
-    }
-
-    //skapa nytt abonnemang
-    public Abonnemang skapaAbonnemang(Status s){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Hur många månader vill du vara medlem?\nSkriv in en siffra: ");
-        return new Abonnemang(sc.nextInt(), s); //skapa ett nytt abonnemang på Medlem:en
+        return tmpPnr;
     }
 
     @Override

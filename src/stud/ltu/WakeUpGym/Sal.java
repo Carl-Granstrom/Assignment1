@@ -1,6 +1,7 @@
 package stud.ltu.WakeUpGym;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 /**
  * Förutsätter jämnt antal platser per rad, är en acceptabel lösning i nuläget.
@@ -52,33 +53,40 @@ public class Sal {
         this.aktivitet = aktivitet;
     }
 
-    public String getNamn(){
+    String getNamn(){
         return this.namn;
     }
 
-    public Aktivitet getAktivitet(){
+    Aktivitet getAktivitet(){
         return this.aktivitet;
     }
 
-    public boolean isLedig(int i){
+    private boolean isLedig(int i){
         assert i < platser.length;      //Assert legal index into array
         return !bokadPlats[i];
     }
 
     //konvertera chararray på formatet {'2', 'h'} till salsindex i. Boka platsen på arrayposition "i"
-    public void bokaPlats(char[] plats, Medlem m) {
+    void bokaPlats(char[] plats, Medlem m) {
+        int i;
         //konvertera char[2] till Plats[]-index
         int radNummer = Character.getNumericValue(plats[0]);        //siffran(rad)
         int platsNummer = new String(alfabet).indexOf(plats[1]);    //bokstaven(plats på raden)
-        int i = ((radNummer - 1) * platserPerRad) + platsNummer;
-        if (isLedig(i)) {
-            bokadPlats[i] = true;
+        if (platsNummer < platserPerRad && radNummer < rader) {
+            i = ((radNummer - 1) * platserPerRad) + platsNummer;
+        } else throw new InputMismatchException("Den platsen finns inte i denna sal!");
+        try {
+            if (isLedig(i)) {
+                bokadPlats[i] = true;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ArrayIndexOutOfBoundsException("Denna plats finns inte i salen!");
         }
         addBokat(m);
     }
 
     //Skriv ut en "tvådimensionell" representation av salens platser
-    public void printSal(){
+    void printSal(){
         //om salens bredd och djup båda är mindre än tio, använd den mer avancerade representationen för utskrift
         if ((this.rader < 10) && (this.platserPerRad < 10)) {
             printSolidLine();
@@ -124,18 +132,18 @@ public class Sal {
 
     //skriv ut Platsens namn eller, om platsen är bokad, "XX".
     private String platsOrBokad(int i){
-        if (bokadPlats[i] == false) {
+        if (!bokadPlats[i]) {
             return platser[i].toString();
         } else {
             return "XX";
         }
     }
 
-    public void addBokat (Medlem medlem){
+    private void addBokat (Medlem medlem){
         harBokat.add(medlem);
     }
 
-    public boolean redanBokat (Medlem user){
+    boolean redanBokat (Medlem user){
         for (Medlem m : harBokat) {
             if (m == user){
                 return true;

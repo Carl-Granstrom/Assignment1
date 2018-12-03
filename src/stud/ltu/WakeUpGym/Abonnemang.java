@@ -22,7 +22,7 @@ public class Abonnemang {
     /*
     * Ersätt bool param med metodanr. till metod isMedlem(); lagra isMedlem(bool) i Medlem?
     */
-    public int beraknaKostnad(int manader, Status s){
+    private int beraknaKostnad(int manader, Status s){
         int totalKostnad;  //placeholder
         final int basPris = 250;
         final int extra = 50;
@@ -54,11 +54,11 @@ public class Abonnemang {
         return totalKostnad;
     }
 
-    public int getKostnad(){
+    int getKostnad(){
         return kostnad;
     }
 
-    public int getManader(){
+    int getManader(){
         return this.manader;
     }
 

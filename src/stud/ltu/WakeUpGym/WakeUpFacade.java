@@ -52,8 +52,13 @@ public final class WakeUpFacade {
                     do {
                         try {
                             loggaIn();
-                            continueLoop = false;
-                        } catch (Exception e) { System.out.println(e);}
+                            continueLoop = false;}
+                            catch (InputMismatchException e) { System.out.println(e);}
+                            catch (Exception e) {
+                                System.out.println(e);
+                                System.out.println("Unexpected error type! Please submit bug report!");
+                                e.printStackTrace();
+                        }
                     } while (continueLoop);
                     break;
 
@@ -68,7 +73,13 @@ public final class WakeUpFacade {
 
                 case 4:
                     try { bokaPlats(user); }
-                    catch (Exception e) { System.out.println(e);}
+                    catch (IllegalStateException e) { System.out.println(e);}
+                    catch (IllegalCallerException e) { System.out.println(e);
+                    }
+                    catch (Exception e) {
+                        System.out.println(e);
+                        System.out.println("Unexpected error type, please submit bug report");
+                        e.printStackTrace();}
                     break;
 
                 case 5:
@@ -89,37 +100,15 @@ public final class WakeUpFacade {
      * Kontroll av personnummret.
      */
     private static void loggaIn(){
-        int[] tmpPnr = getPnrInput();   //hämta int-array med personnummer från användaren.
-
+        int[] tmpPnr = Medlem.getPnrInput();   //hämta int-array med personnummer från användaren.
         //Sök i registret efter ett matchande personnummer
         Medlem tmpMedlem = sokRegister(tmpPnr);     //returnera första medlemmen med matchande personnummer från registret
         if (tmpMedlem == null){
-            System.out.println("Ogiltig inloggning, försök igen");  //Skriv ut felmeddelande,
-        } else{
+            System.out.println("Ingen användare med detta personnummer hittad i systemet, försök igen");  //Felmeddelande,
+        } else {
             user = tmpMedlem;
             System.out.printf("Logged in as: %n" + user.toString());
         }
-    }
-
-    private static int[] getPnrInput(){
-        Scanner sc = new Scanner(System.in);
-        int[] tmpPnr = new int[10];
-
-        System.out.println("Vänligen skriv in ditt personnummer som tio siffror och tryck Enter för att logga in:");
-        String tmpString = sc.nextLine();  //store input String
-
-        char[] tmpCharArray = tmpString.toCharArray(); //convert String to charArray
-        //move the 10 first characters of the charArray to personNummer int-array.
-
-        for (int i = 0; i < 10; i++){
-            char c = tmpCharArray[i];
-            int siffra = Character.getNumericValue(c);
-            if (siffra > 9 || siffra < 0) {
-                throw new InputMismatchException("Input contains non-numeric characters!");
-            }
-            tmpPnr[i] = siffra;  //för in siffran i temporär array för att matcha mot pnr i MedlemsRegister
-        }
-        return tmpPnr;
     }
 
     //iterera över alla medlemmarna och jämför deras pnr med det inslagna
@@ -154,7 +143,7 @@ public final class WakeUpFacade {
 
         Scanner sc = new Scanner(System.in);
         try {
-            val = Integer.parseInt(sc.nextLine()) - 1;     //Läs in menyvalet
+            val = Integer.parseInt(sc.nextLine()) - 1;          //Läs in menyvalet
         } catch (NumberFormatException e){e.printStackTrace();}
 
         if ((val >= 0) && (val <= Aktivitet.values().length)){  //kontrollera giltigt val
@@ -174,16 +163,15 @@ public final class WakeUpFacade {
     }
 
     private static char[] platsValInput(){
-        char[] val = new char[2];
         Scanner sc = new Scanner(System.in);
         System.out.println("Vänligen skriv ditt platsval på formatet [Bokstav][Siffra](ex: 4c): ");
         String tmpString = sc.nextLine();  //store input String
-        char[] tmpCharArray = tmpString.toCharArray(); //convert String to charArray
+        char[] platsArray = tmpString.toCharArray(); //convert String to charArray
         //move the 2 first characters of the charArray to val char[].
-        for (int i = 0; i < 2; i++) {
-            val[i] = tmpCharArray[i];
+        if (platsArray.length != 2) {
+            throw new InputMismatchException("Felaktigt formaterad platsangivelse");
         }
-        return val;
+        return platsArray;
     }
 
     private static void geAktivitetsAlternativ(){
@@ -196,6 +184,7 @@ public final class WakeUpFacade {
         System.out.println();
     }
 
+    //För ett givet menyval, returnera aktivitet ur Aktivitets-enum. Aktivitet.values ger flexibel implementation
     private static Aktivitet getAktivitet(int val){
         for (Aktivitet a : Aktivitet.values()){
             if(val == a.ordinal()){
