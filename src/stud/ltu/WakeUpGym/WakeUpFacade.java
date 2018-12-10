@@ -73,9 +73,8 @@ public final class WakeUpFacade {
 
                 case 4:
                     try { bokaPlats(user); }
-                    catch (IllegalStateException e) { System.out.println(e);}
-                    catch (IllegalCallerException e) { System.out.println(e);
-                    }
+                    catch (IllegalStateException e) { System.out.println(e); }
+                    catch (IllegalCallerException e) { System.out.println(e); }
                     catch (Exception e) {
                         System.out.println(e);
                         System.out.println("Unexpected error type, please submit bug report");

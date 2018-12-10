@@ -61,7 +61,7 @@ public class Sal {
         return this.aktivitet;
     }
 
-    private boolean isLedig(int i){
+    private boolean isLedig(int i) {
         assert i < platser.length;      //Assert legal index into array
         return !bokadPlats[i];
     }
@@ -72,9 +72,13 @@ public class Sal {
         //konvertera char[2] till Plats[]-index
         int radNummer = Character.getNumericValue(plats[0]);        //siffran(rad)
         int platsNummer = new String(alfabet).indexOf(plats[1]);    //bokstaven(plats på raden)
+
         if (platsNummer < platserPerRad && radNummer < rader) {
             i = ((radNummer - 1) * platserPerRad) + platsNummer;
-        } else throw new InputMismatchException("Den platsen finns inte i denna sal!");
+        } else {
+            throw new InputMismatchException("Den platsen finns inte i denna sal!");
+        }
+
         try {
             if (isLedig(i)) {
                 bokadPlats[i] = true;
@@ -105,7 +109,7 @@ public class Sal {
 
     //skriv ut avskiljare mellan platserna vågrätt, samt övre och under kant
     private void printSolidLine(){
-        for (int i = 0; i < platserPerRad; i++){
+        for (int i = 0; i < platserPerRad; i++) {
             System.out.print("----");
         }
         System.out.println();
@@ -115,23 +119,23 @@ public class Sal {
      * Skriv ut platsnummer för lediga platser, XX för upptagna
      * @param rad det radnummer som ska skrivas ut.
      */
-    private void printPlatsLine(int rad){
-        for (int i = rad * platserPerRad; i < ((rad + 1) * platserPerRad); i++){
+    private void printPlatsLine(int rad) {
+        for (int i = rad * platserPerRad; i < ((rad + 1) * platserPerRad); i++) {
                 System.out.print("|" + platsOrBokad(i) + "|");
         }
         System.out.println();
     }
 
     //Skriv ut en mer kompakt rad för större salar
-    private void printPlatsLineCompact(int rad){
-        for (int i = rad * platserPerRad; i < ((rad + 1) * platserPerRad); i++){
+    private void printPlatsLineCompact(int rad) {
+        for (int i = rad * platserPerRad; i < ((rad + 1) * platserPerRad); i++) {
             System.out.printf("%-4s", platsOrBokad(i));
         }
         System.out.println();
     }
 
     //skriv ut Platsens namn eller, om platsen är bokad, "XX".
-    private String platsOrBokad(int i){
+    private String platsOrBokad(int i) {
         if (!bokadPlats[i]) {
             return platser[i].toString();
         } else {
@@ -139,11 +143,11 @@ public class Sal {
         }
     }
 
-    private void addBokat (Medlem medlem){
+    private void addBokat(Medlem medlem){
         harBokat.add(medlem);
     }
 
-    boolean redanBokat (Medlem user){
+    boolean redanBokat(Medlem user) {
         for (Medlem m : harBokat) {
             if (m == user){
                 return true;
